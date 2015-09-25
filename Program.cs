@@ -14,6 +14,11 @@ namespace _02ReplaceTag
 
             Console.WriteLine("just a demo commit");
             Console.WriteLine(new string('*', 23));
+
+            for (int i = 0; i < 100; i++)
+            {
+                Console.WriteLine(i);
+            }
         }
     }
 }
