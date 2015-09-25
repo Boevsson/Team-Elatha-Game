@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,19 +13,7 @@ namespace _02ReplaceTag
         {
 
             Console.WriteLine("just a demo commit");
+            Console.WriteLine(new string('*', 23));
         }
     }
 }
-=======
-using System.Text;
-
-class Game
-{
-    static void Main()
-
-    {
-        string str = Console.ReadLine();
-        System.Console.WriteLine(str);
-    }
-}
->>>>>>> origin/master
