@@ -11,6 +11,8 @@ namespace CarRacer
 {
     class Game
     {
+        public string highScoreFilePath = @"Scores.txt";
+
         public void PlayGame()
         {
             ResetBuffer();
@@ -77,12 +79,6 @@ namespace CarRacer
             // 2) ...
             // etc
         } // end void AboutMe()
-
-        void ViewHighScores()
-        {
-            // implement some high-score system, preferably reading from .txt
-            // splitting usernames and scores (regex?), dictionary
-        } // end void ViewHighScores()
 
         #endregion
 
@@ -167,13 +163,12 @@ namespace CarRacer
 
         void SaveScore(int score, string player)
         {
-            string path = @"Scores.txt";
             Dictionary<int, List<string>> scores = new Dictionary<int, List<string>>();
             List<string> subList = new List<string>();
 
-            if (File.Exists(path))
+            if (File.Exists(highScoreFilePath))
             {
-                string readText = File.ReadAllText(path);
+                string readText = File.ReadAllText(highScoreFilePath);
                 Regex regex = new Regex(@"(\w+) (\d+)");
                 MatchCollection matches = regex.Matches(readText);
 
@@ -212,7 +207,29 @@ namespace CarRacer
                     playerPlace++;
                 }
             }
-            File.WriteAllText(path, highScores.ToString());
+            File.WriteAllText(highScoreFilePath, highScores.ToString());
+        }
+
+        void ViewHighScores()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Green;
+            string[] scores = File.ReadAllLines(highScoreFilePath);
+
+            Console.WriteLine();
+            Console.WriteLine("Highscores");
+            Console.WriteLine();
+
+            for (int i = 0; i < 10 && i < scores.Length; i++)
+            {
+                Console.WriteLine(scores[i]);
+            }
+            Console.WriteLine();
+            Console.WriteLine("Press any key to go back to menu");
+
+            ConsoleKeyInfo keyPressed = Console.ReadKey();
+
+            ShowMenu();
         }
 
         #endregion
