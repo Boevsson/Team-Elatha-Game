@@ -1,2 +1,0 @@
-C:\Users\Ivan\Documents\Visual Studio 2015\Projects\TeamProject\Game\bin\Debug\Game.exe.config
-C:\Users\Ivan\Desktop\SOFTUNI\SoftUni Courses\Fundamental Level\Advanced C#\11. Advanced-CSharp-Teamwork-Assignment-Sept-2015\Team-Elatha-Game\Game\bin\Debug\Game.exe.config
