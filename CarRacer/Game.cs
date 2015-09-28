@@ -15,7 +15,7 @@ namespace CarRacer
             ShowMenu();
         } // end public void PlayGame()
 
-        static void ShowMenu()
+        public void ShowMenu()
         {
             // Clear the console and assign foreground color. Welcome the user and offer numeric choice for
             // new game, highscore table, about, exit (environment.exit(0))
@@ -41,13 +41,13 @@ namespace CarRacer
             switch (chooseMenu)
             {
                 case (1):
-                    Console.WriteLine(1);
+                    InitializeGame();
                     break;
                 case (2):
-                    Console.WriteLine(2);
+                    ViewHighScores();
                     break;
                 case (3):
-                    Console.WriteLine(3);
+                    AboutGame();
                     break;
                 case (4):
                     Environment.Exit(0);
