@@ -123,6 +123,7 @@ namespace CarRacer
 
         Car SpawnCar(int i)
         {
+            return new Car();
             // create an array of type ConsoleColor, add some colors (reserve one for your own car)
             // randomly pick an array[index] and create a new Car object manually 
             // Car spawnedCar = new Car(); spawnedCar.Y = 2; spawnedCar.Color = colors[index], switch (i)
