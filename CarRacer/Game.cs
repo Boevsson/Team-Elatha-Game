@@ -55,8 +55,8 @@ namespace CarRacer
                 // move other cars, buffs
                 // create new list of cars, foreach element in carList create new car object 
 
-                    // collision detection
-                        // lives--, possible GameOver(score, username)
+                // collision detection
+                // lives--, possible GameOver(score, username)
 
                 // clear all after each thread.sleep
 
@@ -214,22 +214,79 @@ namespace CarRacer
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Green;
-            string[] scores = File.ReadAllLines(highScoreFilePath);
 
-            Console.WriteLine();
-            Console.WriteLine("Highscores");
-            Console.WriteLine();
-
-            for (int i = 0; i < 10 && i < scores.Length; i++)
+            if (File.Exists(highScoreFilePath))
             {
-                Console.WriteLine(scores[i]);
+                string[] scores = File.ReadAllLines(highScoreFilePath);
+
+                Console.WriteLine();
+                Console.WriteLine("Highscores");
+                Console.WriteLine();
+
+                for (int i = 0; i < 10 && i < scores.Length; i++)
+                {
+                    Console.WriteLine(scores[i]);
+                }
+                Console.WriteLine();
+                Console.WriteLine("Press any key to go back to menu");
+
+                ConsoleKeyInfo keyPressed = Console.ReadKey();
+
+                ShowMenu();
             }
-            Console.WriteLine();
-            Console.WriteLine("Press any key to go back to menu");
+            else
+            {
+                Console.WriteLine();
+                Console.WriteLine("Highscores");
+                Console.WriteLine();
+                Console.WriteLine("There are no highscores yet");
+                Console.WriteLine();
+                Console.WriteLine("Press any key to go back to menu");
 
-            ConsoleKeyInfo keyPressed = Console.ReadKey();
+                ConsoleKeyInfo keyPressed = Console.ReadKey();
 
-            ShowMenu();
+                ShowMenu();
+            }
+
+        }
+
+        void CheckForHighscore(int score, string player)
+        {
+            if (File.Exists(highScoreFilePath))
+            {
+                string[] highestScore = File.ReadAllLines(highScoreFilePath);
+                Regex regex = new Regex(@"(\w+) (\d+)");
+                Match match = regex.Match(highestScore[0]);
+
+                if (score >= int.Parse(match.Groups[2].ToString()))
+                {
+                    string greating = string.Format("     Congratulations " + player + "!     ");
+                    int spacesCount = (greating.Length - string.Format("Highscore: " + score).Length) / 2;
+                    string highScore = string.Format(new string(' ', spacesCount) + "Highscore: " + score + new string(' ', spacesCount));
+                    Console.SetCursorPosition(Console.WindowWidth - greating.Length / 2, Console.WindowHeight + 1);
+                    Console.Write(greating);
+                    Console.SetCursorPosition(Console.WindowWidth - greating.Length / 2, Console.WindowHeight);
+                    Console.Write(new string(' ', greating.Length - 1));
+                    Console.SetCursorPosition(Console.WindowWidth - greating.Length / 2, Console.WindowHeight - 1);
+                    Console.Write(highScore);
+                }
+                else
+                {
+                    return;
+                }
+            }
+            else
+            {
+                string greating = string.Format("     Congratulations " + player + "!     ");
+                int spacesCount = (greating.Length - string.Format("Highscore: " + score).Length) / 2;
+                string highScore = string.Format(new string(' ', spacesCount) + "Highscore: " + score + new string(' ', spacesCount));
+                Console.SetCursorPosition(Console.WindowWidth - greating.Length / 2, Console.WindowHeight - 1);
+                Console.Write(greating);
+                Console.SetCursorPosition(Console.WindowWidth - greating.Length / 2, Console.WindowHeight);
+                Console.Write(new string(' ', greating.Length - 1));
+                Console.SetCursorPosition(Console.WindowWidth - greating.Length / 2, Console.WindowHeight + 1);
+                Console.Write(highScore);
+            }
         }
 
         #endregion
