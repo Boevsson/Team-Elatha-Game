@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using System.IO;
 
 namespace CarRacer
 {
@@ -158,6 +160,60 @@ namespace CarRacer
             // prints single char at certain position
             // useful for lane separators ( '|' ) and for collecting bonuses (lives?)
         } // end void PrintAtPosition(int x, int y, char symbol, ConsoleColor color)
+
+        #endregion
+
+        #region HIGHSCORE_SYSTEM
+
+        void SaveScore(int score, string player)
+        {
+            string path = @"Scores.txt";
+            Dictionary<int, List<string>> scores = new Dictionary<int, List<string>>();
+            List<string> subList = new List<string>();
+
+            if (File.Exists(path))
+            {
+                string readText = File.ReadAllText(path);
+                Regex regex = new Regex(@"(\w+) (\d+)");
+                MatchCollection matches = regex.Matches(readText);
+
+                foreach (Match match in matches)
+                {
+                    subList = new List<string>();
+
+                    if (scores.ContainsKey(int.Parse(match.Groups[2].ToString())))
+                    {
+                        subList = scores[int.Parse(match.Groups[2].ToString())];
+                    }
+
+                    subList.Add(match.Groups[1].ToString());
+                    scores[int.Parse(match.Groups[2].ToString())] = subList;
+                }
+            }
+
+            subList = new List<string>();
+
+            if (scores.ContainsKey(score))
+            {
+                subList = scores[score];
+            }
+
+            subList.Add(player);
+            scores[score] = subList;
+
+            StringBuilder highScores = new StringBuilder();
+            int playerPlace = 1;
+
+            foreach (var item in scores.OrderByDescending(x => x.Key))
+            {
+                foreach (var players in item.Value)
+                {
+                    highScores.Append(string.Format(playerPlace + ". " + players + " " + item.Key + Environment.NewLine));
+                    playerPlace++;
+                }
+            }
+            File.WriteAllText(path, highScores.ToString());
+        }
 
         #endregion
 
