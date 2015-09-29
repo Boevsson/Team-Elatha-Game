@@ -15,12 +15,57 @@ namespace CarRacer
             ShowMenu();
         } // end public void PlayGame()
 
-        void ShowMenu()
+        public void ShowMenu()
         {
             // Clear the console and assign foreground color. Welcome the user and offer numeric choice for
             // new game, highscore table, about, exit (environment.exit(0))
             // read user input as string and switch (default case calls ShowMenu() again)
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Green;
+            centerText("=================");
+            centerText("=== CAR RACER ===");
+            centerText("=================");
+            Console.WriteLine();
+            centerText("Welcome to Car Racer!");
+            Console.WriteLine();
+            centerText("MENU");
+            centerText("====");
+            centerText("1. New Game");
+            centerText("2. Highscore");
+            centerText("3. About");
+            centerText("4. Exit");
+
+            Console.Write("Enter menu number: ");
+            string userChoice = Console.ReadLine();
+
+            switch (userChoice)
+            {
+                case "1":
+                    InitializeGame();
+                    break;
+                case "2":
+                    ViewHighScores();
+                    break;
+                case "3":
+                    AboutGame();
+                    break;
+                case "4":
+                    Environment.Exit(0);
+                    break;
+                default:
+                    Console.WriteLine("Invalid input! Press any key to continue...");
+                    Console.ReadKey();
+                    ShowMenu();
+                    break;
+            }
+
         } // end void ShowMenu()
+
+        private static void centerText(String text)
+        {
+            Console.Write(new string(' ', (Console.WindowWidth - text.Length) / 2));
+            Console.WriteLine(text);
+        }
 
         #region MENU_OPTIONS
 
@@ -123,6 +168,7 @@ namespace CarRacer
 
         Car SpawnCar(int i)
         {
+            return new Car();
             // create an array of type ConsoleColor, add some colors (reserve one for your own car)
             // randomly pick an array[index] and create a new Car object manually 
             // Car spawnedCar = new Car(); spawnedCar.Y = 2; spawnedCar.Color = colors[index], switch (i)

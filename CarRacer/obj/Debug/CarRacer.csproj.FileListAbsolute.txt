@@ -1,0 +1,6 @@
+K:\Drive\Документи\GitHub\Team-Elatha-Game\CarRacer\bin\Debug\CarRacer.exe.config
+K:\Drive\Документи\GitHub\Team-Elatha-Game\CarRacer\bin\Debug\CarRacer.exe
+K:\Drive\Документи\GitHub\Team-Elatha-Game\CarRacer\bin\Debug\CarRacer.pdb
+K:\Drive\Документи\GitHub\Team-Elatha-Game\CarRacer\obj\Debug\CarRacer.exe
+K:\Drive\Документи\GitHub\Team-Elatha-Game\CarRacer\obj\Debug\CarRacer.pdb
+K:\Drive\Документи\GitHub\Team-Elatha-Game\CarRacer\obj\Debug\CarRacer.csprojResolveAssemblyReference.cache
