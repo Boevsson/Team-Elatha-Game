@@ -10,6 +10,7 @@ namespace CarRacer
     class Game
     {
         public static int trackOffsetRight = 25;
+        //закоментиран ред
 
         public void PlayGame()
         {
