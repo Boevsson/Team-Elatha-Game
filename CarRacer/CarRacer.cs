@@ -1,6 +1,10 @@
 ﻿using System;
+<<<<<<< HEAD
 
 namespace CarRacer
+=======
+﻿namespace CarRacer
+>>>>>>> e1c0b0dc52b0c321fcbb9a44911f628e9a781d76
 {
     class CarRacer
     {
