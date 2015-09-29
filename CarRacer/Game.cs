@@ -11,15 +11,20 @@ namespace CarRacer
 {
     class Game
     {
+<<<<<<< HEAD
+        public static int trackOffsetRight = 25;
+        //закоментиран ред
+=======
         protected string highScoreFilePath = @"Scores.txt";
+>>>>>>> master
 
         public void PlayGame()
         {
             ResetBuffer();
             ShowMenu();
             //ConsoleView();
-            //PrintStringAtPosition(0, 5);
-            //PrintCarAtPosition(30, 10, "*", ConsoleColor.Green);
+            PrintStringAtPosition(0, 5);
+            PrintCarAtPosition(30, 10, "*", ConsoleColor.Green);
         } // end public void PlayGame()
 
         void ShowMenu()
@@ -124,6 +129,14 @@ namespace CarRacer
 
         void ChooseDiff()
         {
+<<<<<<< HEAD
+            Console.BufferHeight = Console.WindowHeight = 45;
+            Console.BufferWidth = Console.WindowWidth = 70;
+
+            PrintLogo(0, 0);
+            Thread.Sleep(1000);
+=======
+>>>>>>> master
             Console.Clear();
 
             centerText("=================");
@@ -146,13 +159,13 @@ namespace CarRacer
             switch (userChoice)
             {
                 case "1":
-                    InitializeGame();
+                    InitializeGame(200, 7);
                     break;
                 case "2":
-                    InitializeGame();
+                    InitializeGame(175, 6);
                     break;
                 case "3":
-                    InitializeGame();
+                    InitializeGame(150, 5);
                     break;
                 case "4":
                     ShowMenu();
@@ -167,23 +180,137 @@ namespace CarRacer
 
         #region MENU_OPTIONS
 
-        void InitializeGame()
+        void InitializeGame(int speed, int newCarInterval)
         {
             Console.Write("Enter your nickname...");
             string player = Console.ReadLine();
 
             // variables
             List<Car> carsList = new List<Car>();
-            Random rnd = new Random();
+            List<Coin> collectibles = new List<Coin>();
+
             double score = 0;
-            int speed = 100;
             int lives = 1;
 
             // initialize player car
+            Car myCar = new Car(34, 35, ConsoleColor.Red);
+
+            Random random = new Random();
+
+            int newCollectibleInterval = 0;
 
             while (true)
             {
                 bool hitted = false;
+
+                if (newCollectibleInterval > 29)
+                {
+                    Coin bonus = new Coin();
+                    int bonusLane = random.Next(0, 5);
+                    bonus.X = trackOffsetRight + 2 + 4 * bonusLane; // 21-> where the first lane starts; 2-> half the width of the lane; 4-> the width of one lane
+                    bonus.Y = 1;
+                    collectibles.Add(bonus);
+                    newCollectibleInterval = 0;
+                    newCarInterval = -2;
+                }
+
+                if (newCarInterval > 5)
+                {
+                    Car addCar = SpawnCar(random.Next(1, 6));
+                    carsList.Add(addCar);
+                    newCarInterval = 0;
+                }
+
+                for (int i = 1; i < 45; i += 2)
+                {
+                    char symbol = '|';
+                    string lines = string.Format("{2}{1}{0}{1}{0}{1}{0}{1}{0}{1}{0}{1}", new string(' ', 3), symbol, new string(' ', trackOffsetRight));
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.WriteLine(lines);
+
+                }
+
+                PrintCarAtPosition(myCar.X, myCar.Y, "*", myCar.Color);
+
+
+
+                foreach (var car in carsList)
+                {
+                    PrintCarAtPosition(car.X, car.Y, "*", car.Color);
+                    car.Y++;
+                }
+                for (int i = 0; i < carsList.Count; i++)
+                {
+                    if (carsList[i].Y > Console.WindowHeight - 5)
+                    {
+                        carsList.Remove(carsList[i]);
+                    }
+                }
+
+                foreach (var bonusCoin in collectibles)
+                {
+                    PrintAtPosition(bonusCoin.X, bonusCoin.Y, bonusCoin.Symbol, bonusCoin.Color);
+                    bonusCoin.Y++;
+                }
+                for (int i = 0; i < collectibles.Count; i++)
+                {
+                    if (collectibles[i].Y > Console.WindowHeight - 1)
+                    {
+                        collectibles.Remove(collectibles[i]);
+                    }
+                }
+
+                if (Console.KeyAvailable)
+                {
+                    ConsoleKeyInfo pressedKey = Console.ReadKey();
+
+                    switch (pressedKey.Key)
+                    {                    
+                        case ConsoleKey.LeftArrow:
+                            {
+                                if (myCar.X > trackOffsetRight + 1)
+                                {
+                                    myCar.X -= 4;
+                                }
+                                break;
+                            }                           
+                        case ConsoleKey.UpArrow:
+                            {
+                                if (myCar.Y > 10)
+                                {
+                                    myCar.Y -= 1;
+                                }
+                            }   
+                            break;
+                        case ConsoleKey.RightArrow:
+                            {
+                                if (myCar.X < trackOffsetRight + 16)
+                                {
+                                    myCar.X += 4;
+                                }
+                            }
+                            break;
+                        case ConsoleKey.DownArrow:
+                            {
+                                if (myCar.Y < 40)
+                                {
+                                    myCar.Y += 1;
+                                }
+                            }
+                            break;
+                    }
+
+                    //while (Console.KeyAvailable)
+                    //{
+                    //    pressedKey = Console.ReadKey();
+                    //}
+                }
+
+                Thread.Sleep(speed);
+                Console.Clear();
+                newCarInterval++;
+                newCollectibleInterval++;
 
                 // logic behind spawning cars and buffs
                 // spawn a car
@@ -191,6 +318,8 @@ namespace CarRacer
 
                 // move player car (ConsoleKeyInfo
                 // ConsoleKey.LeftArrow, RighthArrow, UpArrow, DownArrow)
+
+                
 
                 // move other cars, buffs
                 // create new list of cars, foreach element in carList create new car object 
@@ -223,8 +352,13 @@ namespace CarRacer
         #endregion
 
         #region INGAME_METHODS
+<<<<<<< HEAD
+        //Set an ingame box Method
+        static void ConsoleView()
+=======
 
         void ConsoleView()
+>>>>>>> master
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.DarkGreen;
@@ -248,9 +382,15 @@ namespace CarRacer
             {
                 Console.Write(symbol);
             }
+<<<<<<< HEAD
+        }
+        //Clear the box Method 
+        static void ClearBox()
+=======
         } // end void ConsoleView()
 
         void ClearBox()
+>>>>>>> master
         {
             for (int i = 1; i < Console.WindowHeight - 2; i++)
             {
@@ -259,7 +399,11 @@ namespace CarRacer
                 Console.SetCursorPosition(2, i);
                 Console.Write(new string(' ', Console.WindowWidth - 4));
             }
+<<<<<<< HEAD
+        }
+=======
         } // end void ClearBox() 
+>>>>>>> master
 
         void GameOver(double score, string player)
         {   // Endgame screen?
@@ -298,12 +442,27 @@ namespace CarRacer
 
         Car SpawnCar(int i)
         {
-            return new Car();
-            // create an array of type ConsoleColor, add some colors (reserve one for your own car)
-            // randomly pick an array[index] and create a new Car object manually 
-            // Car spawnedCar = new Car(); spawnedCar.Y = 2; spawnedCar.Color = colors[index], switch (i)
-            // switch (i) to place the spawned car in a lane of it's own!
-            // return spawnedCar
+            int laneWidth = 4;
+
+            List<ConsoleColor> colorPalette = new List<ConsoleColor>() { ConsoleColor.Blue, ConsoleColor.Cyan, ConsoleColor.Green, ConsoleColor.Magenta, ConsoleColor.White };
+            Random random = new Random();
+
+            Car spawnedCar = new Car();
+            spawnedCar.Y = 1;
+            spawnedCar.Color = colorPalette[random.Next(colorPalette.Count)];
+
+            //int lane = random.Next(1, 6);
+            switch (i)
+            {
+                case 1: spawnedCar.X = trackOffsetRight + laneWidth * 0 + 1; break;
+                case 2: spawnedCar.X = trackOffsetRight + laneWidth * 1 + 1; break;
+                case 3: spawnedCar.X = trackOffsetRight + laneWidth * 2 + 1; break;
+                case 4: spawnedCar.X = trackOffsetRight + laneWidth * 3 + 1; break;
+                case 5: spawnedCar.X = trackOffsetRight + laneWidth * 4 + 1; break;
+
+            }
+
+            return spawnedCar;
         } // end void SpawnCar()
 
         #endregion
@@ -328,12 +487,22 @@ namespace CarRacer
                 if (digit % 2 == 0)
                 {
                     Console.SetCursorPosition(x, y++);
+<<<<<<< HEAD
+                    Console.ForegroundColor = color;
+                    Console.WriteLine(string.Format(" {0} ", thing));
+=======
                     Console.WriteLine("  " + thing);
+>>>>>>> master
                 }
                 else
                 {
                     Console.SetCursorPosition(x, y++);
+<<<<<<< HEAD
+                    Console.ForegroundColor = color;
+                    Console.WriteLine(string.Format("{0}{0}{0}", thing));
+=======
                     Console.WriteLine(string.Format("{0} {0} {0}", thing));
+>>>>>>> master
                 }
                 digit++;
             }
@@ -365,6 +534,9 @@ namespace CarRacer
         {
             // prints single char at certain position
             // useful for lane separators ( '|' ) and for collecting bonuses (lives?)
+            Console.ForegroundColor = color;
+            Console.SetCursorPosition(x, y);
+            Console.Write(symbol);
         } // end void PrintAtPosition(int x, int y, char symbol, ConsoleColor color)
 
         #endregion
