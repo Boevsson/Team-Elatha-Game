@@ -53,8 +53,8 @@ namespace CarRacer
                     Environment.Exit(0);
                     break;
                 default:
-                    Console.WriteLine("Invalid input! Press any key to continue...");
-                    Console.ReadKey();
+                    Console.WriteLine("Invalid input!");
+                    Thread.Sleep(1000);
                     ShowMenu();
                     break;
             }
