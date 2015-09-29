@@ -1,6 +1,6 @@
 ﻿using System;
 
-﻿namespace CarRacer
+namespace CarRacer
 
 {
     class CarRacer

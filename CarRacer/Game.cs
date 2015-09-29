@@ -4,30 +4,167 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Text.RegularExpressions;
-using System.IO;
 
 namespace CarRacer
 {
     class Game
     {
-        public string highScoreFilePath = @"Scores.txt";
-
         public void PlayGame()
         {
             ResetBuffer();
-            ShowMenu();
+           // ShowMenu();
             ConsoleView();
             PrintStringAtPosition(0, 5);
-            PrintCarAtPosition(30, 10, "*", ConsoleColor.Green);
+            PrintCarAtPosition(30, 10, "*", ConsoleColor.White);
         } // end public void PlayGame()
 
-        void ShowMenu()
+        public void ShowMenu()
         {
             // Clear the console and assign foreground color. Welcome the user and offer numeric choice for
             // new game, highscore table, about, exit (environment.exit(0))
             // read user input as string and switch (default case calls ShowMenu() again)
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            Console.BufferHeight = Console.WindowHeight = 45;
+            Console.BufferWidth = Console.WindowWidth = 70;
+
+            int position = 0;
+
+            for (int i = 0; i < 5; i++)
+            {
+                PrintLogo(position, position + i);
+                Thread.Sleep(1000);
+                Console.Clear();
+            }
+
+            centerText("=================");
+            centerText("=== CAR RACER ===");
+            centerText("=================");
+            Console.WriteLine();
+            centerText("Welcome to Car Racer!");
+            Console.WriteLine();
+            centerText("MENU");
+            centerText("====");
+            centerText("1. New Game");
+            centerText("2. Highscore");
+            centerText("3. About");
+            centerText("4. Exit");
+
+
+            Console.WriteLine();
+            Console.Write(new string(' ', (Console.WindowWidth - "Enter menu number: ".Length) / 2));
+            Console.Write("Enter menu number: ");
+            string userChoice = Console.ReadLine();
+
+            switch (userChoice)
+            {
+                case "1":
+                    ChooseDiff();
+                    break;
+                case "2":
+                    ViewHighScores();
+                    break;
+                case "3":
+                    AboutGame();
+                    break;
+                case "4":
+                    Environment.Exit(0);
+                    break;
+                default:
+                    Console.WriteLine("Invalid input!");
+                    Thread.Sleep(1000);
+                    ShowMenu();
+                    break;
+            }
+
         } // end void ShowMenu()
+
+        private static void centerText(String text)
+        {
+            Console.Write(new string(' ', (Console.WindowWidth - text.Length) / 2));
+            Console.WriteLine(text);
+        }
+
+        static void PrintLogo(int x, int y)
+        {
+            Console.SetCursorPosition(x, y);
+            centerText("=================");
+            centerText("=== CAR RACER ===");
+            centerText("=================");
+            Console.WriteLine(@"
+                                                        #@@@@,     
+                                                        @;`;@@     
+                             ,@#';,.                      @@@@     
+                         `@@@@@@@@@@@@@@@@@@@@' :@@@@@@@@@@@@#     
+                       @@@@@@@@@@@@@@@@@@@; .#@@@@@@@@@@    ,@@@   
+                    ` '@@@@@@@@@@@@@+,  :@@@@@@@@@@@@@, #@@@@; @@  
+             ;@@@@@@@@@@',`     .:'@@@@@@@@@@@@@@@@@@ #@@@#@@@@`@` 
+          +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@#     `@@.  
+        @.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#,@+        @@  
+      #` @@@@@     '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@          @# 
+    `' `@@@@' @@@@#  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @.          @@ 
+   ' ,@@@@@+.@@@+@@@  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@:@           #@ 
+  #@@@@@@@@ @@     @@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@;@           +@ 
+ +@@@@@@@@@@@       @,`@@@@@@@@@@@@@@@@@@@@@@@@@@@@.@           @@ 
+ #@@@@@@@@;@@       @@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@ @+          @@ 
+  @@@@@@@@'@@       @@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@'@@         +@, 
+  @@@@@@@@@@@       @#:@@@@@@@@@@@@@#+@@@@@@@@@@@@@@ @@       ;@@  
+  @` ,@@@@@;@       @ @@@@@@;`                       .@@+   `@@@   
+    `;#@@@@ @@`   `@# @;                               @@@@@@@@    
+             @@@@@@# `                                   '@#:      
+               +@'                                                 ");
+            // prints single char at certain position
+            // useful for lane separators ( '|' ) and for collecting bonuses (lives?)
+        } // end void PrintAtPosition(int x, int y, char symbol, ConsoleColor color)
+
+        public void ChooseDiff()
+        {
+            Console.BufferHeight = Console.WindowHeight = 45;
+            Console.BufferWidth = Console.WindowWidth = 70;
+
+            PrintLogo(0, 0);
+            Thread.Sleep(1000);
+            Console.Clear();
+
+            centerText("=================");
+            centerText("=== CAR RACER ===");
+            centerText("=================");
+            Console.WriteLine();
+            centerText("Choose difficulty");
+            Console.WriteLine();
+            centerText("====");
+            centerText("1. Driver");
+            centerText("2. Racer");
+            centerText("3. F1");
+            centerText("4. Go back");
+
+            Console.WriteLine();
+            Console.Write(new string(' ', (Console.WindowWidth - "Enter menu number: ".Length) / 2));
+            Console.Write("Enter menu number: ");
+            string userChoice = Console.ReadLine();
+
+            switch (userChoice)
+            {
+                case "1":
+                    InitializeGame();
+                    break;
+                case "2":
+                    InitializeGame();
+                    break;
+                case "3":
+                    InitializeGame();
+                    break;
+                case "4":
+                    ShowMenu();
+                    break;
+                default:
+                    Console.WriteLine("Invalid input!");
+                    Thread.Sleep(1000);
+                    ChooseDiff();
+                    break;
+            }
+        }
 
         #region MENU_OPTIONS
 
@@ -83,14 +220,20 @@ namespace CarRacer
             // etc
         } // end void AboutMe()
 
+        void ViewHighScores()
+        {
+            // implement some high-score system, preferably reading from .txt
+            // splitting usernames and scores (regex?), dictionary
+        } // end void ViewHighScores()
+
         #endregion
 
         #region INGAME_METHODS
         //Set an ingame box Method
-        static void ConsoleView() 
+        static void ConsoleView()
         {
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.BackgroundColor = ConsoleColor.Blue;
             int height = Console.BufferHeight;
             int width = Console.BufferWidth;
             for (int i = 0; i < width; i++)
@@ -113,7 +256,7 @@ namespace CarRacer
             }
         }
         //Clear the box Method 
-        static void ClearBox() 
+        static void ClearBox()
         {
             for (int i = 1; i < Console.WindowHeight - 2; i++)
             {
@@ -123,6 +266,7 @@ namespace CarRacer
                 Console.Write(new string(' ', Console.WindowWidth - 4));
             }
         }
+
         void GameOver(double score, string player)
         {   // Endgame screen?
             Console.Clear();
@@ -150,6 +294,7 @@ namespace CarRacer
            \  \:\/:/    \  \:\__|:|   \  \:\/:/     \  \:\     
             \  \::/      \__\::::/     \  \::/       \  \:\    
              \__\/           ~~~~       \__\/         \__\/    
+
         "));
             Console.WriteLine("Congratulations, {0}! Your score is {1:F0}", player, score);
             Console.WriteLine("Press ENTER to return to main menu.");
@@ -180,19 +325,19 @@ namespace CarRacer
         void PrintCarAtPosition(int x, int y, string thing, ConsoleColor color)
         {
             int digit = 0;
+            Console.BackgroundColor = color;
+            Console.ForegroundColor = ConsoleColor.White;
             while (digit < 4)
             {
                 if (digit % 2 == 0)
                 {
-                    Console.SetCursorPosition(x, y++);
-                    Console.ForegroundColor = color;
+                    Console.SetCursorPosition(x, y++);                    
                     Console.WriteLine("  " + thing);
                 }
                 else
                 {
-                    Console.SetCursorPosition(x, y++);
-                    Console.ForegroundColor = color;
-                    Console.WriteLine(string.Format("{0} {0} {0}", thing));
+                    Console.SetCursorPosition(x, y++);                   
+                    Console.WriteLine(string.Format("{0}{0}{0}", thing));
                 }
                 digit++;
             }
@@ -226,81 +371,6 @@ namespace CarRacer
             // prints single char at certain position
             // useful for lane separators ( '|' ) and for collecting bonuses (lives?)
         } // end void PrintAtPosition(int x, int y, char symbol, ConsoleColor color)
-
-        #endregion
-
-        #region HIGHSCORE_SYSTEM
-
-        void SaveScore(int score, string player)
-        {
-            Dictionary<int, List<string>> scores = new Dictionary<int, List<string>>();
-            List<string> subList = new List<string>();
-
-            if (File.Exists(highScoreFilePath))
-            {
-                string readText = File.ReadAllText(highScoreFilePath);
-                Regex regex = new Regex(@"(\w+) (\d+)");
-                MatchCollection matches = regex.Matches(readText);
-
-                foreach (Match match in matches)
-                {
-                    subList = new List<string>();
-
-                    if (scores.ContainsKey(int.Parse(match.Groups[2].ToString())))
-                    {
-                        subList = scores[int.Parse(match.Groups[2].ToString())];
-                    }
-
-                    subList.Add(match.Groups[1].ToString());
-                    scores[int.Parse(match.Groups[2].ToString())] = subList;
-                }
-            }
-
-            subList = new List<string>();
-
-            if (scores.ContainsKey(score))
-            {
-                subList = scores[score];
-            }
-
-            subList.Add(player);
-            scores[score] = subList;
-
-            StringBuilder highScores = new StringBuilder();
-            int playerPlace = 1;
-
-            foreach (var item in scores.OrderByDescending(x => x.Key))
-            {
-                foreach (var players in item.Value)
-                {
-                    highScores.Append(string.Format(playerPlace + ". " + players + " " + item.Key + Environment.NewLine));
-                    playerPlace++;
-                }
-            }
-            File.WriteAllText(highScoreFilePath, highScores.ToString());
-        }
-
-        void ViewHighScores()
-        {
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Green;
-            string[] scores = File.ReadAllLines(highScoreFilePath);
-
-            Console.WriteLine();
-            Console.WriteLine("Highscores");
-            Console.WriteLine();
-
-            for (int i = 0; i < 10 && i < scores.Length; i++)
-            {
-                Console.WriteLine(scores[i]);
-            }
-            Console.WriteLine();
-            Console.WriteLine("Press any key to go back to menu");
-
-            ConsoleKeyInfo keyPressed = Console.ReadKey();
-
-            ShowMenu();
-        }
 
         #endregion
 
