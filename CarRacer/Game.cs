@@ -4,13 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using System.IO;
 
 namespace CarRacer
 {
     class Game
     {
+<<<<<<< HEAD
         public static int trackOffsetRight = 25;
         //закоментиран ред
+=======
+        protected string highScoreFilePath = @"Scores.txt";
+>>>>>>> master
 
         public void PlayGame()
         {
@@ -21,7 +27,7 @@ namespace CarRacer
             PrintCarAtPosition(30, 10, "*", ConsoleColor.Green);
         } // end public void PlayGame()
 
-        public void ShowMenu()
+        void ShowMenu()
         {
             // Clear the console and assign foreground color. Welcome the user and offer numeric choice for
             // new game, highscore table, about, exit (environment.exit(0))
@@ -83,13 +89,13 @@ namespace CarRacer
 
         } // end void ShowMenu()
 
-        private static void centerText(String text)
+        void centerText(String text)
         {
             Console.Write(new string(' ', (Console.WindowWidth - text.Length) / 2));
             Console.WriteLine(text);
         }
 
-        static void PrintLogo(int x, int y)
+        void PrintLogo(int x, int y)
         {
             Console.SetCursorPosition(x, y);
             centerText("=================");
@@ -121,13 +127,16 @@ namespace CarRacer
             // useful for lane separators ( '|' ) and for collecting bonuses (lives?)
         } // end void PrintAtPosition(int x, int y, char symbol, ConsoleColor color)
 
-        public void ChooseDiff()
+        void ChooseDiff()
         {
+<<<<<<< HEAD
             Console.BufferHeight = Console.WindowHeight = 45;
             Console.BufferWidth = Console.WindowWidth = 70;
 
             PrintLogo(0, 0);
             Thread.Sleep(1000);
+=======
+>>>>>>> master
             Console.Clear();
 
             centerText("=================");
@@ -173,7 +182,8 @@ namespace CarRacer
 
         void InitializeGame(int speed, int newCarInterval)
         {
-            // get user nickname (for highscore)
+            Console.Write("Enter your nickname...");
+            string player = Console.ReadLine();
 
             // variables
             List<Car> carsList = new List<Car>();
@@ -339,17 +349,16 @@ namespace CarRacer
             // etc
         } // end void AboutMe()
 
-        void ViewHighScores()
-        {
-            // implement some high-score system, preferably reading from .txt
-            // splitting usernames and scores (regex?), dictionary
-        } // end void ViewHighScores()
-
         #endregion
 
         #region INGAME_METHODS
+<<<<<<< HEAD
         //Set an ingame box Method
         static void ConsoleView()
+=======
+
+        void ConsoleView()
+>>>>>>> master
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.DarkGreen;
@@ -373,9 +382,15 @@ namespace CarRacer
             {
                 Console.Write(symbol);
             }
+<<<<<<< HEAD
         }
         //Clear the box Method 
         static void ClearBox()
+=======
+        } // end void ConsoleView()
+
+        void ClearBox()
+>>>>>>> master
         {
             for (int i = 1; i < Console.WindowHeight - 2; i++)
             {
@@ -384,7 +399,11 @@ namespace CarRacer
                 Console.SetCursorPosition(2, i);
                 Console.Write(new string(' ', Console.WindowWidth - 4));
             }
+<<<<<<< HEAD
         }
+=======
+        } // end void ClearBox() 
+>>>>>>> master
 
         void GameOver(double score, string player)
         {   // Endgame screen?
@@ -452,26 +471,38 @@ namespace CarRacer
 
         void ResetBuffer()
         {
-            // Title for the console, curser visibility options,
-            // console window buffers and size, other cosmetics
+            Console.Title = "Car Racer v1.0";
+            Console.CursorVisible = false;
+            Console.BufferHeight = Console.WindowHeight = 45;
+            Console.BufferWidth = Console.WindowWidth = 70;
         } // end void ResetBuffer()
 
         void PrintCarAtPosition(int x, int y, string thing, ConsoleColor color)
         {
             int digit = 0;
+            //Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = color;
             while (digit < 4)
             {
                 if (digit % 2 == 0)
                 {
                     Console.SetCursorPosition(x, y++);
+<<<<<<< HEAD
                     Console.ForegroundColor = color;
                     Console.WriteLine(string.Format(" {0} ", thing));
+=======
+                    Console.WriteLine("  " + thing);
+>>>>>>> master
                 }
                 else
                 {
                     Console.SetCursorPosition(x, y++);
+<<<<<<< HEAD
                     Console.ForegroundColor = color;
                     Console.WriteLine(string.Format("{0}{0}{0}", thing));
+=======
+                    Console.WriteLine(string.Format("{0} {0} {0}", thing));
+>>>>>>> master
                 }
                 digit++;
             }
@@ -479,25 +510,24 @@ namespace CarRacer
             // new lines in the string Car.Vehicle reset the CursorPosition :(
             // manual car drawing until we find a solution :/
         } // end void PrintCarAtPosition(int x, int y, string thing, ConsoleColor color)
-        static void PrintPoints(int points)
+
+        void PrintPoints(int points)
         {
             Console.SetCursorPosition(Console.WindowWidth / 2 - 15, 0);
             Console.Write("Points : {0}", points);
-        }
+        } // end void PrintPoints(int points)s
 
-        static void PrintLives(int lives)
+        void PrintLives(int lives)
         {
             Console.SetCursorPosition(Console.WindowWidth / 2 + 2, 0);
             Console.Write("Level : {0}", lives);
             Console.ForegroundColor = ConsoleColor.White;
+        } // end void PrintLives(int lives)
 
-        }
         void PrintStringAtPosition(int points, int lives)
         {
             PrintPoints(points);
             PrintLives(lives);
-            // prints a string at certain position
-            // useful for scoreboard
         } // end void PrintStringAtPosition(int x, int y, string text, ConsoleColor color)
 
         void PrintAtPosition(int x, int y, char symbol, ConsoleColor color)
@@ -508,6 +538,140 @@ namespace CarRacer
             Console.SetCursorPosition(x, y);
             Console.Write(symbol);
         } // end void PrintAtPosition(int x, int y, char symbol, ConsoleColor color)
+
+        #endregion
+
+        #region HIGHSCORE_SYSTEM
+
+        void SaveScore(int score, string player)
+        {
+            Dictionary<int, List<string>> scores = new Dictionary<int, List<string>>();
+            List<string> subList = new List<string>();
+
+            if (File.Exists(highScoreFilePath))
+            {
+                string readText = File.ReadAllText(highScoreFilePath);
+                Regex regex = new Regex(@"(\w+) (\d+)");
+                MatchCollection matches = regex.Matches(readText);
+
+                foreach (Match match in matches)
+                {
+                    subList = new List<string>();
+
+                    if (scores.ContainsKey(int.Parse(match.Groups[2].ToString())))
+                    {
+                        subList = scores[int.Parse(match.Groups[2].ToString())];
+                    }
+
+                    subList.Add(match.Groups[1].ToString());
+                    scores[int.Parse(match.Groups[2].ToString())] = subList;
+                }
+            }
+
+            subList = new List<string>();
+
+            if (scores.ContainsKey(score))
+            {
+                subList = scores[score];
+            }
+
+            subList.Add(player);
+            scores[score] = subList;
+
+            StringBuilder highScores = new StringBuilder();
+            int playerPlace = 1;
+
+            foreach (var item in scores.OrderByDescending(x => x.Key))
+            {
+                foreach (var players in item.Value)
+                {
+                    highScores.Append(string.Format(playerPlace + ". " + players + " " + item.Key + Environment.NewLine));
+                    playerPlace++;
+                }
+            }
+            File.WriteAllText(highScoreFilePath, highScores.ToString());
+        }
+
+        void ViewHighScores()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            if (File.Exists(highScoreFilePath))
+            {
+                string[] scores = File.ReadAllLines(highScoreFilePath);
+
+                Console.WriteLine();
+                Console.WriteLine("Highscores");
+                Console.WriteLine();
+
+                for (int i = 0; i < 10 && i < scores.Length; i++)
+                {
+                    Console.WriteLine(scores[i]);
+                }
+                Console.WriteLine();
+                Console.WriteLine("Press any key to go back to menu");
+
+                ConsoleKeyInfo keyPressed = Console.ReadKey();
+
+                ShowMenu();
+            }
+            else
+            {
+                Console.WriteLine();
+                Console.WriteLine("Highscores");
+                Console.WriteLine();
+                Console.WriteLine("There are no highscores yet");
+                Console.WriteLine();
+                Console.WriteLine("Press any key to go back to menu");
+
+                ConsoleKeyInfo keyPressed = Console.ReadKey();
+
+                ShowMenu();
+            }
+
+        }
+
+        void CheckForHighscore(int score, string player)
+        {
+            Console.BufferHeight = Console.WindowHeight = 45;
+            Console.BufferWidth = Console.WindowWidth = 70;
+            if (File.Exists(highScoreFilePath))
+            {
+                string[] highestScore = File.ReadAllLines(highScoreFilePath);
+                Regex regex = new Regex(@"(\w+) (\d+)");
+                Match match = regex.Match(highestScore[0]);
+
+                if (score >= int.Parse(match.Groups[2].ToString()))
+                {
+                    string greating = string.Format("  Congratulations " + player + "!  ");
+                    int spacesCount = (greating.Length - string.Format("Highscore: " + score).Length) / 2;
+                    string highScore = string.Format(new string(' ', spacesCount) + "Highscore: " + score + new string(' ', spacesCount));
+                    Console.SetCursorPosition((Console.WindowWidth - greating.Length) / 2, Console.WindowHeight / 2 + 1);
+                    Console.Write(greating);
+                    Console.SetCursorPosition((Console.WindowWidth - greating.Length) / 2, Console.WindowHeight / 2);
+                    Console.Write(new string(' ', greating.Length - 1));
+                    Console.SetCursorPosition((Console.WindowWidth - greating.Length) / 2, Console.WindowHeight / 2 - 1);
+                    Console.Write(highScore);
+                }
+                else
+                {
+                    return;
+                }
+            }
+            else
+            {
+                string greating = string.Format("     Congratulations " + player + "!     ");
+                int spacesCount = (greating.Length - string.Format("Highscore: " + score).Length) / 2;
+                string highScore = string.Format(new string(' ', spacesCount) + "Highscore: " + score + new string(' ', spacesCount));
+                Console.SetCursorPosition((Console.WindowWidth - greating.Length) / 2, Console.WindowHeight / 2 + 1);
+                Console.Write(greating);
+                Console.SetCursorPosition((Console.WindowWidth - greating.Length) / 2, Console.WindowHeight / 2);
+                Console.Write(new string(' ', greating.Length - 1));
+                Console.SetCursorPosition((Console.WindowWidth - greating.Length) / 2, Console.WindowHeight / 2 - 1);
+                Console.Write(highScore);
+            }
+        }
 
         #endregion
 
