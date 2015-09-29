@@ -1,3 +1,4 @@
+﻿using System;
 ﻿namespace CarRacer
 {
     class CarRacer
