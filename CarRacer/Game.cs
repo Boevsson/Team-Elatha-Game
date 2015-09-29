@@ -202,6 +202,10 @@ namespace CarRacer
                 if (Console.KeyAvailable)
                 {
                     ConsoleKeyInfo pressedKey = Console.ReadKey();
+                    while (Console.KeyAvailable)
+                    {
+                        Console.ReadKey();
+                    }
 
                     switch (pressedKey.Key)
                     {
@@ -380,8 +384,7 @@ namespace CarRacer
 
         private void CheckForHighscore(int score, string player)
         {
-            Console.BufferHeight = Console.WindowHeight = 45;
-            Console.BufferWidth = Console.WindowWidth = 70;
+
             if (File.Exists(highScoreFilePath))
             {
                 string[] highestScore = File.ReadAllLines(highScoreFilePath);
