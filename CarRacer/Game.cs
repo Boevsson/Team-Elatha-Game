@@ -174,6 +174,7 @@ namespace CarRacer
 
             // variables
             List<Car> carsList = new List<Car>();
+            List<Coin> collectibles = new List<Coin>();
 
             double score = 0;
             int lives = 1;
@@ -181,6 +182,8 @@ namespace CarRacer
             // initialize player car
 
             Random random = new Random();
+
+            int newCollectibleInterval = 23;
 
             while (true)
             {
@@ -191,6 +194,16 @@ namespace CarRacer
                     Car addCar = SpawnCar(random.Next(1, 6));
                     carsList.Add(addCar);
                     newCarInterval = 0;
+                }
+
+                if (newCollectibleInterval > 23)
+                {
+                    Coin bonus = new Coin();
+                    int bonusLane = random.Next(0, 5);
+                    bonus.X = 6 + 1 + 4 * bonusLane; // 6-> where the first lane starts; 1-> half the width of the lane; 4-> the width of one lane
+                    bonus.Y = 1;
+                    collectibles.Add(bonus);
+                    newCollectibleInterval = 0;
                 }
 
                 for (int i = 1; i < 45; i += 2)
@@ -207,16 +220,32 @@ namespace CarRacer
                 {
                     PrintCarAtPosition(car.X, car.Y, car.Vehicle, car.Color);
                     car.Y++;
-                    if (car.Y > 40)
+                }
+                for (int i = 0; i < carsList.Count; i++)
+                {
+                    if (carsList[i].Y > Console.WindowHeight - 5)
                     {
-                        carsList.Remove(car);
-                        break;
+                        carsList.Remove(carsList[i]);
+                    }
+                }
+
+                foreach (var bonusCoin in collectibles)
+                {
+                    PrintAtPosition(bonusCoin.X, bonusCoin.Y, bonusCoin.Symbol, bonusCoin.Color);
+                    bonusCoin.Y++;
+                }
+                for (int i = 0; i < collectibles.Count; i++)
+                {
+                    if (collectibles[i].Y > Console.WindowHeight - 1)
+                    {
+                        collectibles.Remove(collectibles[i]);
                     }
                 }
 
                 Thread.Sleep(speed);
                 Console.Clear();
                 newCarInterval++;
+                newCollectibleInterval++;
 
                 // logic behind spawning cars and buffs
                 // spawn a car
