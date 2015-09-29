@@ -123,9 +123,9 @@ namespace CarRacer
             Console.BufferHeight = Console.WindowHeight = 45;
             Console.BufferWidth = Console.WindowWidth = 70;
 
-                PrintLogo(0, 0);
-                Thread.Sleep(1000);
-                Console.Clear();
+            PrintLogo(0, 0);
+            Thread.Sleep(1000);
+            Console.Clear();
 
             centerText("=================");
             centerText("=== CAR RACER ===");
@@ -147,13 +147,13 @@ namespace CarRacer
             switch (userChoice)
             {
                 case "1":
-                    InitializeGame();
+                    InitializeGame(200, 7);
                     break;
                 case "2":
-                    InitializeGame();
+                    InitializeGame(175, 6);
                     break;
                 case "3":
-                    InitializeGame();
+                    InitializeGame(150, 5);
                     break;
                 case "4":
                     ShowMenu();
@@ -168,22 +168,55 @@ namespace CarRacer
 
         #region MENU_OPTIONS
 
-        void InitializeGame()
+        void InitializeGame(int speed, int newCarInterval)
         {
             // get user nickname (for highscore)
 
             // variables
             List<Car> carsList = new List<Car>();
-            Random rnd = new Random();
+
             double score = 0;
-            int speed = 100;
             int lives = 1;
 
             // initialize player car
 
+            Random random = new Random();
+
             while (true)
             {
                 bool hitted = false;
+
+                if (newCarInterval > 5)
+                {
+                    Car addCar = SpawnCar(random.Next(1, 6));
+                    carsList.Add(addCar);
+                    newCarInterval = 0;
+                }
+
+                for (int i = 1; i < 45; i += 2)
+                {
+                    char symbol = '|';
+                    string lines = string.Format("  {0}{1}{0}{1}{0}{1}{0}{1}{0}{1}{0}{1}", new string(' ', 3), symbol);
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.WriteLine(lines);
+
+                }
+
+                foreach (var car in carsList)
+                {
+                    PrintCarAtPosition(car.X, car.Y, car.Vehicle, car.Color);
+                    car.Y++;
+                    if (car.Y > 40)
+                    {
+                        carsList.Remove(car);
+                        break;
+                    }
+                }
+
+                Thread.Sleep(speed);
+                Console.Clear();
+                newCarInterval++;
 
                 // logic behind spawning cars and buffs
                 // spawn a car
@@ -195,8 +228,8 @@ namespace CarRacer
                 // move other cars, buffs
                 // create new list of cars, foreach element in carList create new car object 
 
-                    // collision detection
-                        // lives--, possible GameOver(score, username)
+                // collision detection
+                // lives--, possible GameOver(score, username)
 
                 // clear all after each thread.sleep
 
@@ -230,7 +263,7 @@ namespace CarRacer
 
         #region INGAME_METHODS
         //Set an ingame box Method
-        static void ConsoleView() 
+        static void ConsoleView()
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.DarkGreen;
@@ -256,7 +289,7 @@ namespace CarRacer
             }
         }
         //Clear the box Method 
-        static void ClearBox() 
+        static void ClearBox()
         {
             for (int i = 1; i < Console.WindowHeight - 2; i++)
             {
@@ -266,7 +299,7 @@ namespace CarRacer
                 Console.Write(new string(' ', Console.WindowWidth - 4));
             }
         }
-        
+
         void GameOver(double score, string player)
         {   // Endgame screen?
             Console.Clear();
@@ -304,12 +337,28 @@ namespace CarRacer
 
         Car SpawnCar(int i)
         {
-            return new Car();
-            // create an array of type ConsoleColor, add some colors (reserve one for your own car)
-            // randomly pick an array[index] and create a new Car object manually 
-            // Car spawnedCar = new Car(); spawnedCar.Y = 2; spawnedCar.Color = colors[index], switch (i)
-            // switch (i) to place the spawned car in a lane of it's own!
-            // return spawnedCar
+            int magicNumber = 6;
+            int laneWidth = 4;
+
+            List<ConsoleColor> colorPalette = new List<ConsoleColor>() { ConsoleColor.Blue, ConsoleColor.Cyan, ConsoleColor.Green, ConsoleColor.Magenta, ConsoleColor.White, ConsoleColor.Yellow };
+            Random random = new Random();
+
+            Car spawnedCar = new Car();
+            spawnedCar.Y = 1;
+            spawnedCar.Color = colorPalette[random.Next(colorPalette.Count)];
+
+            //int lane = random.Next(1, 6);
+            switch (i)
+            {
+                case 1: spawnedCar.X = magicNumber; break;
+                case 2: spawnedCar.X = magicNumber + laneWidth; break;
+                case 3: spawnedCar.X = magicNumber + laneWidth * 2; break;
+                case 4: spawnedCar.X = magicNumber + laneWidth * 3; break;
+                case 5: spawnedCar.X = magicNumber + laneWidth * 4; break;
+
+            }
+
+            return spawnedCar;
         } // end void SpawnCar()
 
         #endregion
@@ -370,6 +419,9 @@ namespace CarRacer
         {
             // prints single char at certain position
             // useful for lane separators ( '|' ) and for collecting bonuses (lives?)
+            Console.ForegroundColor = color;
+            Console.SetCursorPosition(x, y);
+            Console.Write(symbol);
         } // end void PrintAtPosition(int x, int y, char symbol, ConsoleColor color)
 
         #endregion
