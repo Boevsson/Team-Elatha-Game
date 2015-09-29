@@ -179,13 +179,14 @@ namespace CarRacer
                 Console.WriteLine("Speed: {0}", speed);
                 // Position = track offset + 4 lanes, 5 chars each + aditional buffer 5
 
-                PrintCarAtPosition(myCar.X, myCar.Y, "*", myCar.Color);
-
+                PrintCar(myCar);
+                //PrintCarAtPosition(myCar.X, myCar.Y, "*", myCar.Color);
 
 
                 foreach (var car in carsList)
                 {
-                    PrintCarAtPosition(car.X, car.Y, "*", car.Color);
+                    PrintCar(car);
+                    //PrintCarAtPosition(car.X, car.Y, "*", car.Color);
                     car.Y++;
                 }
                 for (int i = 0; i < carsList.Count; i++)
@@ -577,6 +578,25 @@ namespace CarRacer
             Console.BufferHeight = Console.WindowHeight = 45;
             Console.BufferWidth = Console.WindowWidth = 70;
         } // end private void ResetBuffer()
+
+        private void PrintCar(Car car)
+        {
+            int counterY = 0;
+            int counterX = 0;
+            for (int i = 0; i < car.Vehicle.Length; i++)
+            {
+                Console.SetCursorPosition(car.X + counterX, car.Y + counterY);
+                Console.Write(car.Vehicle[i]);
+                counterX++;
+                if (car.Vehicle[i] == '\n')
+                {
+                    counterY++;
+                    counterX = 0;
+
+                }
+            }
+        } // end private void PrintCar(Car car)
+
 
         private void PrintCarAtPosition(int x, int y, string thing, ConsoleColor color)
         {
