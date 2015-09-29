@@ -13,6 +13,9 @@ namespace CarRacer
         {
             ResetBuffer();
             ShowMenu();
+            //ConsoleView();
+            //PrintStringAtPosition(0, 5);
+            //PrintCarAtPosition(30, 10, "*", ConsoleColor.Green);
         } // end public void PlayGame()
 
         public void ShowMenu()
