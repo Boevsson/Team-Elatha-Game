@@ -226,7 +226,44 @@ namespace CarRacer
         #endregion
 
         #region INGAME_METHODS
-
+        //Set an ingame box Method
+        static void ConsoleView() 
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            int height = Console.BufferHeight;
+            int width = Console.BufferWidth;
+            for (int i = 0; i < width; i++)
+            {
+                Console.Write("_");
+            }
+            for (int i = 1; i < height - 1; i++)
+            {
+                Console.SetCursorPosition(0, i);
+                Console.Write("-|");
+                Console.SetCursorPosition(width - 2, i);
+                Console.Write("|-");
+                Console.SetCursorPosition(0, i);
+            }
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            char symbol = '\u00AF';
+            for (int i = 0; i < width; i++)
+            {
+                Console.Write(symbol);
+            }
+        }
+        //Clear the box Method 
+        static void ClearBox() 
+        {
+            for (int i = 1; i < Console.WindowHeight - 2; i++)
+            {
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.SetCursorPosition(2, i);
+                Console.Write(new string(' ', Console.WindowWidth - 4));
+            }
+        }
+        
         void GameOver(double score, string player)
         {   // Endgame screen?
             Console.Clear();
