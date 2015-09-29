@@ -325,8 +325,8 @@ namespace CarRacer
         void PrintCarAtPosition(int x, int y, string thing, ConsoleColor color)
         {
             int digit = 0;
-            Console.BackgroundColor = ConsoleColor.Red;
-            Console.ForegroundColor = ConsoleColor.White;
+            //Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = color;
             while (digit < 4)
             {
                 if (digit % 2 == 0)
