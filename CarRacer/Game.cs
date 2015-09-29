@@ -4,15 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using System.IO;
 
 namespace CarRacer
 {
     class Game
     {
+        public string highScoreFilePath = @"Scores.txt";
+
         public void PlayGame()
         {
             ResetBuffer();
             ShowMenu();
+            //  PrintStringAtPosition(0, 5);
+            //  PrintCarAtPosition(30, 10, "*", ConsoleColor.Green);
         } // end public void PlayGame()
 
         void ShowMenu()
@@ -51,8 +57,8 @@ namespace CarRacer
                 // move other cars, buffs
                 // create new list of cars, foreach element in carList create new car object 
 
-                    // collision detection
-                        // lives--, possible GameOver(score, username)
+                // collision detection
+                // lives--, possible GameOver(score, username)
 
                 // clear all after each thread.sleep
 
@@ -75,12 +81,6 @@ namespace CarRacer
             // 2) ...
             // etc
         } // end void AboutMe()
-
-        void ViewHighScores()
-        {
-            // implement some high-score system, preferably reading from .txt
-            // splitting usernames and scores (regex?), dictionary
-        } // end void ViewHighScores()
 
         #endregion
 
@@ -113,7 +113,6 @@ namespace CarRacer
            \  \:\/:/    \  \:\__|:|   \  \:\/:/     \  \:\     
             \  \::/      \__\::::/     \  \::/       \  \:\    
              \__\/           ~~~~       \__\/         \__\/    
-
         "));
             Console.WriteLine("Congratulations, {0}! Your score is {1:F0}", player, score);
             Console.WriteLine("Press ENTER to return to main menu.");
@@ -123,6 +122,7 @@ namespace CarRacer
 
         Car SpawnCar(int i)
         {
+            return new Car();
             // create an array of type ConsoleColor, add some colors (reserve one for your own car)
             // randomly pick an array[index] and create a new Car object manually 
             // Car spawnedCar = new Car(); spawnedCar.Y = 2; spawnedCar.Color = colors[index], switch (i)
@@ -163,9 +163,23 @@ namespace CarRacer
             // new lines in the string Car.Vehicle reset the CursorPosition :(
             // manual car drawing until we find a solution :/
         } // end void PrintCarAtPosition(int x, int y, string thing, ConsoleColor color)
-
-        void PrintStringAtPosition(int x, int y, string text, ConsoleColor color)
+        static void PrintPoints(int points)
         {
+            Console.SetCursorPosition(Console.WindowWidth / 2 - 15, 0);
+            Console.Write("Points : {0}", points);
+        }
+
+        static void PrintLives(int lives)
+        {
+            Console.SetCursorPosition(Console.WindowWidth / 2 + 2, 0);
+            Console.Write("Level : {0}", lives);
+            Console.ForegroundColor = ConsoleColor.White;
+
+        }
+        void PrintStringAtPosition(int points, int lives)
+        {
+            PrintPoints(points);
+            PrintLives(lives);
             // prints a string at certain position
             // useful for scoreboard
         } // end void PrintStringAtPosition(int x, int y, string text, ConsoleColor color)
@@ -175,6 +189,81 @@ namespace CarRacer
             // prints single char at certain position
             // useful for lane separators ( '|' ) and for collecting bonuses (lives?)
         } // end void PrintAtPosition(int x, int y, char symbol, ConsoleColor color)
+
+        #endregion
+
+        #region HIGHSCORE_SYSTEM
+
+        void SaveScore(int score, string player)
+        {
+            Dictionary<int, List<string>> scores = new Dictionary<int, List<string>>();
+            List<string> subList = new List<string>();
+
+            if (File.Exists(highScoreFilePath))
+            {
+                string readText = File.ReadAllText(highScoreFilePath);
+                Regex regex = new Regex(@"(\w+) (\d+)");
+                MatchCollection matches = regex.Matches(readText);
+
+                foreach (Match match in matches)
+                {
+                    subList = new List<string>();
+
+                    if (scores.ContainsKey(int.Parse(match.Groups[2].ToString())))
+                    {
+                        subList = scores[int.Parse(match.Groups[2].ToString())];
+                    }
+
+                    subList.Add(match.Groups[1].ToString());
+                    scores[int.Parse(match.Groups[2].ToString())] = subList;
+                }
+            }
+
+            subList = new List<string>();
+
+            if (scores.ContainsKey(score))
+            {
+                subList = scores[score];
+            }
+
+            subList.Add(player);
+            scores[score] = subList;
+
+            StringBuilder highScores = new StringBuilder();
+            int playerPlace = 1;
+
+            foreach (var item in scores.OrderByDescending(x => x.Key))
+            {
+                foreach (var players in item.Value)
+                {
+                    highScores.Append(string.Format(playerPlace + ". " + players + " " + item.Key + Environment.NewLine));
+                    playerPlace++;
+                }
+            }
+            File.WriteAllText(highScoreFilePath, highScores.ToString());
+        }
+
+        void ViewHighScores()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Green;
+            string[] scores = File.ReadAllLines(highScoreFilePath);
+
+            Console.WriteLine();
+            Console.WriteLine("Highscores");
+            Console.WriteLine();
+
+            for (int i = 0; i < 10 && i < scores.Length; i++)
+            {
+                Console.WriteLine(scores[i]);
+            }
+            Console.WriteLine();
+            Console.WriteLine("Press any key to go back to menu");
+
+            ConsoleKeyInfo keyPressed = Console.ReadKey();
+
+            ShowMenu();
+        }
 
         #endregion
 
