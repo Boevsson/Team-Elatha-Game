@@ -142,6 +142,23 @@ namespace CarRacer
 
         void PrintCarAtPosition(int x, int y, string thing, ConsoleColor color)
         {
+            int digit = 0;
+            while (digit < 4)
+            {
+                if (digit % 2 == 0)
+                {
+                    Console.SetCursorPosition(x, y++);
+                    Console.ForegroundColor = color;
+                    Console.WriteLine("  " + thing);
+                }
+                else
+                {
+                    Console.SetCursorPosition(x, y++);
+                    Console.ForegroundColor = color;
+                    Console.WriteLine(string.Format("{0} {0} {0}", thing));
+                }
+                digit++;
+            }
             // prints a car
             // new lines in the string Car.Vehicle reset the CursorPosition :(
             // manual car drawing until we find a solution :/
