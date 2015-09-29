@@ -48,8 +48,9 @@ namespace CarRacer
             centerText("3. About");
             centerText("4. Exit");
 
-            
 
+            Console.WriteLine();
+            Console.Write(new string(' ', (Console.WindowWidth - "Enter menu number: ".Length) / 2));
             Console.Write("Enter menu number: ");
             string userChoice = Console.ReadLine();
 
@@ -135,6 +136,8 @@ namespace CarRacer
             centerText("3. F1");
             centerText("4. Go back");
 
+            Console.WriteLine();
+            Console.Write(new string(' ', (Console.WindowWidth - "Enter menu number: ".Length) / 2));
             Console.Write("Enter menu number: ");
             string userChoice = Console.ReadLine();
 
