@@ -1,8 +1,7 @@
-<<<<<<< HEAD
+
 ﻿using System;
 
-=======
->>>>>>> master
+
 namespace CarRacer
 
 {
