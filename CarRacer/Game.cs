@@ -14,6 +14,9 @@ namespace CarRacer
         // global variables
         protected static int trackOffsetRight = 25;
         protected string highScoreFilePath = @"Scores.txt";
+        double score = 0;
+        int lives = 1;
+        string player = string.Empty;
 
         public void PlayGame()
         {
@@ -120,14 +123,11 @@ namespace CarRacer
         private void InitializeGame(int speed, int newCarInterval)
         {
             Console.Write("Enter your nickname...");
-            string player = Console.ReadLine();
+            player = Console.ReadLine();
 
             // variables
             List<Car> carsList = new List<Car>();
             List<Coin> collectibles = new List<Coin>();
-
-            double score = 0;
-            int lives = 1;
 
             // initialize player car
             Car myCar = new Car(34, 35, ConsoleColor.Red);
@@ -169,6 +169,16 @@ namespace CarRacer
 
                 }
 
+                Console.SetCursorPosition(trackOffsetRight + 5 * 5, 2);
+                Console.WriteLine(player);
+                Console.SetCursorPosition(trackOffsetRight + 5 * 5, 4);
+                Console.WriteLine("Score: {0}", score);
+                Console.SetCursorPosition(trackOffsetRight + 5 * 5, 6);
+                Console.WriteLine("Lives: {0}", lives);
+                Console.SetCursorPosition(trackOffsetRight + 5 * 5, 8);
+                Console.WriteLine("Speed: {0}", speed);
+                // Position = track offset + 4 lanes, 5 chars each + aditional buffer 5
+
                 PrintCarAtPosition(myCar.X, myCar.Y, "*", myCar.Color);
 
 
@@ -183,6 +193,7 @@ namespace CarRacer
                     if (carsList[i].Y > Console.WindowHeight - 5)
                     {
                         carsList.Remove(carsList[i]);
+                        score++;
                     }
                 }
 
