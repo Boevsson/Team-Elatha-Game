@@ -9,7 +9,7 @@ namespace CarRacer
 {
     class Game
     {
-        public static int magicNumber = 24;
+        public static int trackOffsetRight = 25;
 
         public void PlayGame()
         {
@@ -182,14 +182,26 @@ namespace CarRacer
             int lives = 1;
 
             // initialize player car
+            Car myCar = new Car(34, 35, ConsoleColor.Red);
 
             Random random = new Random();
 
-            int newCollectibleInterval = 23;
+            int newCollectibleInterval = 0;
 
             while (true)
             {
                 bool hitted = false;
+
+                if (newCollectibleInterval > 29)
+                {
+                    Coin bonus = new Coin();
+                    int bonusLane = random.Next(0, 5);
+                    bonus.X = trackOffsetRight + 2 + 4 * bonusLane; // 21-> where the first lane starts; 2-> half the width of the lane; 4-> the width of one lane
+                    bonus.Y = 1;
+                    collectibles.Add(bonus);
+                    newCollectibleInterval = 0;
+                    newCarInterval = -2;
+                }
 
                 if (newCarInterval > 5)
                 {
@@ -198,25 +210,19 @@ namespace CarRacer
                     newCarInterval = 0;
                 }
 
-                if (newCollectibleInterval > 23)
-                {
-                    Coin bonus = new Coin();
-                    int bonusLane = random.Next(0, 5);
-                    bonus.X = magicNumber + 2 + 4 * bonusLane; // 21-> where the first lane starts; 2-> half the width of the lane; 4-> the width of one lane
-                    bonus.Y = 1;
-                    collectibles.Add(bonus);
-                    newCollectibleInterval = 0;
-                }
-
                 for (int i = 1; i < 45; i += 2)
                 {
                     char symbol = '|';
-                    string lines = string.Format("{2}{1}{0}{1}{0}{1}{0}{1}{0}{1}{0}{1}", new string(' ', 3), symbol, new string(' ', magicNumber));
+                    string lines = string.Format("{2}{1}{0}{1}{0}{1}{0}{1}{0}{1}{0}{1}", new string(' ', 3), symbol, new string(' ', trackOffsetRight));
                     Console.WriteLine();
                     Console.ForegroundColor = ConsoleColor.Gray;
                     Console.WriteLine(lines);
 
                 }
+
+                PrintCarAtPosition(myCar.X, myCar.Y, "*", myCar.Color);
+
+
 
                 foreach (var car in carsList)
                 {
@@ -244,6 +250,52 @@ namespace CarRacer
                     }
                 }
 
+                if (Console.KeyAvailable)
+                {
+                    ConsoleKeyInfo pressedKey = Console.ReadKey();
+
+                    switch (pressedKey.Key)
+                    {                    
+                        case ConsoleKey.LeftArrow:
+                            {
+                                if (myCar.X > trackOffsetRight + 1)
+                                {
+                                    myCar.X -= 4;
+                                }
+                                break;
+                            }                           
+                        case ConsoleKey.UpArrow:
+                            {
+                                if (myCar.Y > 10)
+                                {
+                                    myCar.Y -= 1;
+                                }
+                            }   
+                            break;
+                        case ConsoleKey.RightArrow:
+                            {
+                                if (myCar.X < trackOffsetRight + 16)
+                                {
+                                    myCar.X += 4;
+                                }
+                            }
+                            break;
+                        case ConsoleKey.DownArrow:
+                            {
+                                if (myCar.Y < 40)
+                                {
+                                    myCar.Y += 1;
+                                }
+                            }
+                            break;
+                    }
+
+                    //while (Console.KeyAvailable)
+                    //{
+                    //    pressedKey = Console.ReadKey();
+                    //}
+                }
+
                 Thread.Sleep(speed);
                 Console.Clear();
                 newCarInterval++;
@@ -255,6 +307,8 @@ namespace CarRacer
 
                 // move player car (ConsoleKeyInfo
                 // ConsoleKey.LeftArrow, RighthArrow, UpArrow, DownArrow)
+
+                
 
                 // move other cars, buffs
                 // create new list of cars, foreach element in carList create new car object 
@@ -370,7 +424,7 @@ namespace CarRacer
         {
             int laneWidth = 4;
 
-            List<ConsoleColor> colorPalette = new List<ConsoleColor>() { ConsoleColor.Blue, ConsoleColor.Cyan, ConsoleColor.Green, ConsoleColor.Magenta, ConsoleColor.White, ConsoleColor.Yellow };
+            List<ConsoleColor> colorPalette = new List<ConsoleColor>() { ConsoleColor.Blue, ConsoleColor.Cyan, ConsoleColor.Green, ConsoleColor.Magenta, ConsoleColor.White };
             Random random = new Random();
 
             Car spawnedCar = new Car();
@@ -380,11 +434,11 @@ namespace CarRacer
             //int lane = random.Next(1, 6);
             switch (i)
             {
-                case 1: spawnedCar.X = magicNumber + laneWidth * 0 + 1; break;
-                case 2: spawnedCar.X = magicNumber + laneWidth * 1 + 1; break;
-                case 3: spawnedCar.X = magicNumber + laneWidth * 2 + 1; break;
-                case 4: spawnedCar.X = magicNumber + laneWidth * 3 + 1; break;
-                case 5: spawnedCar.X = magicNumber + laneWidth * 4 + 1; break;
+                case 1: spawnedCar.X = trackOffsetRight + laneWidth * 0 + 1; break;
+                case 2: spawnedCar.X = trackOffsetRight + laneWidth * 1 + 1; break;
+                case 3: spawnedCar.X = trackOffsetRight + laneWidth * 2 + 1; break;
+                case 4: spawnedCar.X = trackOffsetRight + laneWidth * 3 + 1; break;
+                case 5: spawnedCar.X = trackOffsetRight + laneWidth * 4 + 1; break;
 
             }
 
