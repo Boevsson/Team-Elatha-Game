@@ -1,4 +1,3 @@
-﻿
 ﻿using System;
 using System.Threading;
 using System.Collections.Generic;
@@ -145,7 +144,7 @@ namespace CarRacer
                 {
                     Coin bonus = new Coin();
                     int bonusLane = random.Next(0, 5);
-                    bonus.X = trackOffsetRight + 2 + 4 * bonusLane; 
+                    bonus.X = trackOffsetRight + 2 + 4 * bonusLane;
                     // 21-> where the first lane starts; 2-> half the width of the lane; 4-> the width of one lane
                     bonus.Y = 1;
                     collectibles.Add(bonus);
@@ -491,7 +490,6 @@ namespace CarRacer
            \  \:\/:/    \  \:\__|:|   \  \:\/:/     \  \:\     
             \  \::/      \__\::::/     \  \::/       \  \:\    
              \__\/           ~~~~       \__\/         \__\/    
-
         "));
             Console.WriteLine("Congratulations, {0}! Your score is {1:F0}", player, score);
             Console.WriteLine("Press ENTER to return to main menu.");
@@ -642,7 +640,6 @@ namespace CarRacer
         } // end private void PrintAtPosition(int x, int y, char symbol, ConsoleColor color)
 
         #endregion
-        
+
     } // end class Game
 } // end namespace CarRacer
-
