@@ -14,9 +14,9 @@ namespace CarRacer
         // global variables
         protected static int trackOffsetRight = 25;
         protected string highScoreFilePath = @"Scores.txt";
-        double score = 0;
-        int lives = 1;
-        string player = string.Empty;
+        protected double score = 0;
+        protected int lives = 1;
+        protected string player = string.Empty;
 
         public void PlayGame()
         {
@@ -101,10 +101,10 @@ namespace CarRacer
             switch (userChoice)
             {
                 case "1":
-                    InitializeGame(200, 7);
+                    InitializeGame(50, 7);
                     break;
                 case "2":
-                    InitializeGame(175, 6);
+                    InitializeGame(100, 6);
                     break;
                 case "3":
                     InitializeGame(150, 5);
@@ -172,7 +172,7 @@ namespace CarRacer
                 Console.SetCursorPosition(trackOffsetRight + 5 * 5, 2);
                 Console.WriteLine(player);
                 Console.SetCursorPosition(trackOffsetRight + 5 * 5, 4);
-                Console.WriteLine("Score: {0}", score);
+                Console.WriteLine("Score: {0:F2}", score);
                 Console.SetCursorPosition(trackOffsetRight + 5 * 5, 6);
                 Console.WriteLine("Lives: {0}", lives);
                 Console.SetCursorPosition(trackOffsetRight + 5 * 5, 8);
@@ -193,7 +193,7 @@ namespace CarRacer
                     if (carsList[i].Y > Console.WindowHeight - 5)
                     {
                         carsList.Remove(carsList[i]);
-                        score++;
+                        score += 5 ;
                     }
                 }
 
@@ -259,36 +259,14 @@ namespace CarRacer
                     //    pressedKey = Console.ReadKey();
                     //}
                 }
-
-                Thread.Sleep(speed);
+                score += (0.2) * speed / 240;
+                Thread.Sleep(250-speed);
                 Console.Clear();
                 newCarInterval++;
                 newCollectibleInterval++;
 
-                // logic behind spawning cars and buffs
-                // spawn a car
-                // spawn +1 live buffs
+                // todo: collision detection
 
-                // move player car (ConsoleKeyInfo
-                // ConsoleKey.LeftArrow, RighthArrow, UpArrow, DownArrow)
-
-
-
-                // move other cars, buffs
-                // create new list of cars, foreach element in carList create new car object 
-
-                // collision detection
-                // lives--, possible GameOver(score, username)
-
-                // clear all after each thread.sleep
-
-                // draw player car ( collision => clear other cars from screen, reduce speed, visually show hit)
-
-                // draw other cars, buffs
-
-                // draw score and lives
-
-                // control speed and score
             }
 
         } // end private void InitializeGame(int speed, int newCarInterval)
@@ -477,7 +455,7 @@ namespace CarRacer
             }
         } // end private void ClearBox()
 
-        private void GameOver(int score, string player)
+        private void GameOver(double score, string player)
         {   // Endgame screen?
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Red;
