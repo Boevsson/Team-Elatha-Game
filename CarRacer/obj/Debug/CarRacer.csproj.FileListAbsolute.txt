@@ -1,6 +1,24 @@
+<<<<<<< HEAD
 C:\Users\Peter\Documents\GitHub\Team-Elatha-Game\CarRacer\bin\Debug\CarRacer.exe.config
 C:\Users\Peter\Documents\GitHub\Team-Elatha-Game\CarRacer\bin\Debug\CarRacer.exe
 C:\Users\Peter\Documents\GitHub\Team-Elatha-Game\CarRacer\bin\Debug\CarRacer.pdb
 C:\Users\Peter\Documents\GitHub\Team-Elatha-Game\CarRacer\obj\Debug\CarRacer.csprojResolveAssemblyReference.cache
 C:\Users\Peter\Documents\GitHub\Team-Elatha-Game\CarRacer\obj\Debug\CarRacer.exe
 C:\Users\Peter\Documents\GitHub\Team-Elatha-Game\CarRacer\obj\Debug\CarRacer.pdb
+=======
+K:\Drive\Документи\GitHub\Team-Elatha-Game\CarRacer\bin\Debug\CarRacer.exe.config
+K:\Drive\Документи\GitHub\Team-Elatha-Game\CarRacer\bin\Debug\CarRacer.exe
+K:\Drive\Документи\GitHub\Team-Elatha-Game\CarRacer\bin\Debug\CarRacer.pdb
+K:\Drive\Документи\GitHub\Team-Elatha-Game\CarRacer\obj\Debug\CarRacer.exe
+K:\Drive\Документи\GitHub\Team-Elatha-Game\CarRacer\obj\Debug\CarRacer.pdb
+K:\Drive\Документи\GitHub\Team-Elatha-Game\CarRacer\obj\Debug\CarRacer.csprojResolveAssemblyReference.cache
+C:\Users\Pipi\Documents\Visual Studio 2015\Projects\GitHub\Team-Elatha-Game\CarRacer\bin\Debug\CarRacer.exe.config
+C:\Users\Pipi\Documents\Visual Studio 2015\Projects\GitHub\Team-Elatha-Game\CarRacer\obj\Debug\CarRacer.exe
+C:\Users\Pipi\Documents\Visual Studio 2015\Projects\GitHub\Team-Elatha-Game\CarRacer\obj\Debug\CarRacer.pdb
+C:\Users\Pipi\Documents\Visual Studio 2015\Projects\GitHub\Team-Elatha-Game\CarRacer\bin\Debug\CarRacer.exe
+C:\Users\Pipi\Documents\Visual Studio 2015\Projects\GitHub\Team-Elatha-Game\CarRacer\bin\Debug\CarRacer.pdb
+C:\Users\Pipi\Documents\Visual Studio 2015\Projects\GitHub\Team-Elatha-Game\CarRacer\obj\Debug\CarRacer.csprojResolveAssemblyReference.cache
+C:\Users\danie_000\Documents\GitHub\Team-Elatha-Game\CarRacer\bin\Debug\CarRacer.exe.config
+C:\Users\danie_000\Documents\GitHub\Team-Elatha-Game\CarRacer\obj\Debug\CarRacer.exe
+C:\Users\danie_000\Documents\GitHub\Team-Elatha-Game\CarRacer\obj\Debug\CarRacer.pdb
+>>>>>>> master

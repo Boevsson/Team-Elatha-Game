@@ -73,5 +73,13 @@ namespace CarRacer
         }
         public Car() { }
 
+        public Car (Car car1)
+        {
+            this.x = car1.x;
+            this.y = car1.y;
+            this.color = car1.color;
+            this.vehicle = car1.vehicle;
+        }
+
     } // end class Car
 } // end namespace CarRacer
