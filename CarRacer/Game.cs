@@ -11,7 +11,7 @@ namespace CarRacer
 {
     class Game
     {
-        public string highScoreFilePath = @"Scores.txt";
+        protected string highScoreFilePath = @"Scores.txt";
 
         public void PlayGame()
         {
@@ -22,7 +22,7 @@ namespace CarRacer
             //PrintCarAtPosition(30, 10, "*", ConsoleColor.Green);
         } // end public void PlayGame()
 
-        public void ShowMenu()
+        void ShowMenu()
         {
             // Clear the console and assign foreground color. Welcome the user and offer numeric choice for
             // new game, highscore table, about, exit (environment.exit(0))
@@ -84,13 +84,13 @@ namespace CarRacer
 
         } // end void ShowMenu()
 
-        private static void centerText(String text)
+        void centerText(String text)
         {
             Console.Write(new string(' ', (Console.WindowWidth - text.Length) / 2));
             Console.WriteLine(text);
         }
 
-        static void PrintLogo(int x, int y)
+        void PrintLogo(int x, int y)
         {
             Console.SetCursorPosition(x, y);
             centerText("=================");
@@ -122,14 +122,9 @@ namespace CarRacer
             // useful for lane separators ( '|' ) and for collecting bonuses (lives?)
         } // end void PrintAtPosition(int x, int y, char symbol, ConsoleColor color)
 
-        public void ChooseDiff()
+        void ChooseDiff()
         {
-            Console.BufferHeight = Console.WindowHeight = 45;
-            Console.BufferWidth = Console.WindowWidth = 70;
-
-                PrintLogo(0, 0);
-                Thread.Sleep(1000);
-                Console.Clear();
+            Console.Clear();
 
             centerText("=================");
             centerText("=== CAR RACER ===");
@@ -174,7 +169,8 @@ namespace CarRacer
 
         void InitializeGame()
         {
-            // get user nickname (for highscore)
+            Console.Write("Enter your nickname...");
+            string player = Console.ReadLine();
 
             // variables
             List<Car> carsList = new List<Car>();
@@ -227,8 +223,8 @@ namespace CarRacer
         #endregion
 
         #region INGAME_METHODS
-        //Set an ingame box Method
-        static void ConsoleView() 
+
+        void ConsoleView()
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.DarkGreen;
@@ -252,9 +248,9 @@ namespace CarRacer
             {
                 Console.Write(symbol);
             }
-        }
-        //Clear the box Method 
-        static void ClearBox() 
+        } // end void ConsoleView()
+
+        void ClearBox()
         {
             for (int i = 1; i < Console.WindowHeight - 2; i++)
             {
@@ -263,8 +259,8 @@ namespace CarRacer
                 Console.SetCursorPosition(2, i);
                 Console.Write(new string(' ', Console.WindowWidth - 4));
             }
-        }
-        
+        } // end void ClearBox() 
+
         void GameOver(double score, string player)
         {   // Endgame screen?
             Console.Clear();
@@ -316,8 +312,10 @@ namespace CarRacer
 
         void ResetBuffer()
         {
-            // Title for the console, curser visibility options,
-            // console window buffers and size, other cosmetics
+            Console.Title = "Car Racer v1.0";
+            Console.CursorVisible = false;
+            Console.BufferHeight = Console.WindowHeight = 45;
+            Console.BufferWidth = Console.WindowWidth = 70;
         } // end void ResetBuffer()
 
         void PrintCarAtPosition(int x, int y, string thing, ConsoleColor color)
@@ -343,25 +341,24 @@ namespace CarRacer
             // new lines in the string Car.Vehicle reset the CursorPosition :(
             // manual car drawing until we find a solution :/
         } // end void PrintCarAtPosition(int x, int y, string thing, ConsoleColor color)
-        static void PrintPoints(int points)
+
+        void PrintPoints(int points)
         {
             Console.SetCursorPosition(Console.WindowWidth / 2 - 15, 0);
             Console.Write("Points : {0}", points);
-        }
+        } // end void PrintPoints(int points)s
 
-        static void PrintLives(int lives)
+        void PrintLives(int lives)
         {
             Console.SetCursorPosition(Console.WindowWidth / 2 + 2, 0);
             Console.Write("Level : {0}", lives);
             Console.ForegroundColor = ConsoleColor.White;
+        } // end void PrintLives(int lives)
 
-        }
         void PrintStringAtPosition(int points, int lives)
         {
             PrintPoints(points);
             PrintLives(lives);
-            // prints a string at certain position
-            // useful for scoreboard
         } // end void PrintStringAtPosition(int x, int y, string text, ConsoleColor color)
 
         void PrintAtPosition(int x, int y, char symbol, ConsoleColor color)

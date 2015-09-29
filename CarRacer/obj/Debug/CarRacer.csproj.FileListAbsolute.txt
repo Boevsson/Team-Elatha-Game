@@ -10,3 +10,6 @@ C:\Users\Pipi\Documents\Visual Studio 2015\Projects\GitHub\Team-Elatha-Game\CarR
 C:\Users\Pipi\Documents\Visual Studio 2015\Projects\GitHub\Team-Elatha-Game\CarRacer\bin\Debug\CarRacer.exe
 C:\Users\Pipi\Documents\Visual Studio 2015\Projects\GitHub\Team-Elatha-Game\CarRacer\bin\Debug\CarRacer.pdb
 C:\Users\Pipi\Documents\Visual Studio 2015\Projects\GitHub\Team-Elatha-Game\CarRacer\obj\Debug\CarRacer.csprojResolveAssemblyReference.cache
+C:\Users\danie_000\Documents\GitHub\Team-Elatha-Game\CarRacer\bin\Debug\CarRacer.exe.config
+C:\Users\danie_000\Documents\GitHub\Team-Elatha-Game\CarRacer\obj\Debug\CarRacer.exe
+C:\Users\danie_000\Documents\GitHub\Team-Elatha-Game\CarRacer\obj\Debug\CarRacer.pdb
