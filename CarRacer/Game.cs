@@ -36,23 +36,25 @@ namespace CarRacer
             centerText("4. Exit");
 
             Console.Write("Enter menu number: ");
-            int chooseMenu = int.Parse(Console.ReadLine());
+            string userChoice = Console.ReadLine();
 
-            switch (chooseMenu)
+            switch (userChoice)
             {
-                case (1):
+                case "1":
                     InitializeGame();
                     break;
-                case (2):
+                case "2":
                     ViewHighScores();
                     break;
-                case (3):
+                case "3":
                     AboutGame();
                     break;
-                case (4):
+                case "4":
                     Environment.Exit(0);
                     break;
                 default:
+                    Console.WriteLine("Invalid input! Press any key to continue...");
+                    Console.ReadKey();
                     ShowMenu();
                     break;
             }
