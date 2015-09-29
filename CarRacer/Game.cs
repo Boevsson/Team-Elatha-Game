@@ -9,13 +9,15 @@ namespace CarRacer
 {
     class Game
     {
+        public static int magicNumber = 24;
+
         public void PlayGame()
         {
             ResetBuffer();
             ShowMenu();
             //ConsoleView();
-            //PrintStringAtPosition(0, 5);
-            //PrintCarAtPosition(30, 10, "*", ConsoleColor.Green);
+            PrintStringAtPosition(0, 5);
+            PrintCarAtPosition(30, 10, "*", ConsoleColor.Green);
         } // end public void PlayGame()
 
         public void ShowMenu()
@@ -200,7 +202,7 @@ namespace CarRacer
                 {
                     Coin bonus = new Coin();
                     int bonusLane = random.Next(0, 5);
-                    bonus.X = 6 + 1 + 4 * bonusLane; // 6-> where the first lane starts; 1-> half the width of the lane; 4-> the width of one lane
+                    bonus.X = magicNumber + 2 + 4 * bonusLane; // 21-> where the first lane starts; 2-> half the width of the lane; 4-> the width of one lane
                     bonus.Y = 1;
                     collectibles.Add(bonus);
                     newCollectibleInterval = 0;
@@ -209,7 +211,7 @@ namespace CarRacer
                 for (int i = 1; i < 45; i += 2)
                 {
                     char symbol = '|';
-                    string lines = string.Format("  {0}{1}{0}{1}{0}{1}{0}{1}{0}{1}{0}{1}", new string(' ', 3), symbol);
+                    string lines = string.Format("{2}{1}{0}{1}{0}{1}{0}{1}{0}{1}{0}{1}", new string(' ', 3), symbol, new string(' ', magicNumber));
                     Console.WriteLine();
                     Console.ForegroundColor = ConsoleColor.Gray;
                     Console.WriteLine(lines);
@@ -218,7 +220,7 @@ namespace CarRacer
 
                 foreach (var car in carsList)
                 {
-                    PrintCarAtPosition(car.X, car.Y, car.Vehicle, car.Color);
+                    PrintCarAtPosition(car.X, car.Y, "*", car.Color);
                     car.Y++;
                 }
                 for (int i = 0; i < carsList.Count; i++)
@@ -366,7 +368,6 @@ namespace CarRacer
 
         Car SpawnCar(int i)
         {
-            int magicNumber = 6;
             int laneWidth = 4;
 
             List<ConsoleColor> colorPalette = new List<ConsoleColor>() { ConsoleColor.Blue, ConsoleColor.Cyan, ConsoleColor.Green, ConsoleColor.Magenta, ConsoleColor.White, ConsoleColor.Yellow };
@@ -379,11 +380,11 @@ namespace CarRacer
             //int lane = random.Next(1, 6);
             switch (i)
             {
-                case 1: spawnedCar.X = magicNumber; break;
-                case 2: spawnedCar.X = magicNumber + laneWidth; break;
-                case 3: spawnedCar.X = magicNumber + laneWidth * 2; break;
-                case 4: spawnedCar.X = magicNumber + laneWidth * 3; break;
-                case 5: spawnedCar.X = magicNumber + laneWidth * 4; break;
+                case 1: spawnedCar.X = magicNumber + laneWidth * 0 + 1; break;
+                case 2: spawnedCar.X = magicNumber + laneWidth * 1 + 1; break;
+                case 3: spawnedCar.X = magicNumber + laneWidth * 2 + 1; break;
+                case 4: spawnedCar.X = magicNumber + laneWidth * 3 + 1; break;
+                case 5: spawnedCar.X = magicNumber + laneWidth * 4 + 1; break;
 
             }
 
@@ -409,13 +410,13 @@ namespace CarRacer
                 {
                     Console.SetCursorPosition(x, y++);
                     Console.ForegroundColor = color;
-                    Console.WriteLine("  " + thing);
+                    Console.WriteLine(string.Format(" {0} ", thing));
                 }
                 else
                 {
                     Console.SetCursorPosition(x, y++);
                     Console.ForegroundColor = color;
-                    Console.WriteLine(string.Format("{0} {0} {0}", thing));
+                    Console.WriteLine(string.Format("{0}{0}{0}", thing));
                 }
                 digit++;
             }
