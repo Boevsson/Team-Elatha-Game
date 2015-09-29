@@ -11,12 +11,10 @@ namespace CarRacer
 {
     class Game
     {
-<<<<<<< HEAD
         public static int trackOffsetRight = 25;
         //закоментиран ред
-=======
+
         protected string highScoreFilePath = @"Scores.txt";
->>>>>>> master
 
         public void PlayGame()
         {
@@ -129,14 +127,6 @@ namespace CarRacer
 
         void ChooseDiff()
         {
-<<<<<<< HEAD
-            Console.BufferHeight = Console.WindowHeight = 45;
-            Console.BufferWidth = Console.WindowWidth = 70;
-
-            PrintLogo(0, 0);
-            Thread.Sleep(1000);
-=======
->>>>>>> master
             Console.Clear();
 
             centerText("=================");
@@ -266,7 +256,7 @@ namespace CarRacer
                     ConsoleKeyInfo pressedKey = Console.ReadKey();
 
                     switch (pressedKey.Key)
-                    {                    
+                    {
                         case ConsoleKey.LeftArrow:
                             {
                                 if (myCar.X > trackOffsetRight + 1)
@@ -274,14 +264,14 @@ namespace CarRacer
                                     myCar.X -= 4;
                                 }
                                 break;
-                            }                           
+                            }
                         case ConsoleKey.UpArrow:
                             {
                                 if (myCar.Y > 10)
                                 {
                                     myCar.Y -= 1;
                                 }
-                            }   
+                            }
                             break;
                         case ConsoleKey.RightArrow:
                             {
@@ -319,7 +309,7 @@ namespace CarRacer
                 // move player car (ConsoleKeyInfo
                 // ConsoleKey.LeftArrow, RighthArrow, UpArrow, DownArrow)
 
-                
+
 
                 // move other cars, buffs
                 // create new list of cars, foreach element in carList create new car object 
@@ -352,13 +342,9 @@ namespace CarRacer
         #endregion
 
         #region INGAME_METHODS
-<<<<<<< HEAD
-        //Set an ingame box Method
-        static void ConsoleView()
-=======
 
+        //Set an ingame box Method
         void ConsoleView()
->>>>>>> master
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.DarkGreen;
@@ -382,15 +368,9 @@ namespace CarRacer
             {
                 Console.Write(symbol);
             }
-<<<<<<< HEAD
-        }
-        //Clear the box Method 
-        static void ClearBox()
-=======
         } // end void ConsoleView()
 
         void ClearBox()
->>>>>>> master
         {
             for (int i = 1; i < Console.WindowHeight - 2; i++)
             {
@@ -399,11 +379,7 @@ namespace CarRacer
                 Console.SetCursorPosition(2, i);
                 Console.Write(new string(' ', Console.WindowWidth - 4));
             }
-<<<<<<< HEAD
-        }
-=======
-        } // end void ClearBox() 
->>>>>>> master
+        } // end void ClearBox()
 
         void GameOver(double score, string player)
         {   // Endgame screen?
@@ -487,22 +463,22 @@ namespace CarRacer
                 if (digit % 2 == 0)
                 {
                     Console.SetCursorPosition(x, y++);
-<<<<<<< HEAD
+
                     Console.ForegroundColor = color;
                     Console.WriteLine(string.Format(" {0} ", thing));
-=======
+
                     Console.WriteLine("  " + thing);
->>>>>>> master
+
                 }
                 else
                 {
                     Console.SetCursorPosition(x, y++);
-<<<<<<< HEAD
+
                     Console.ForegroundColor = color;
                     Console.WriteLine(string.Format("{0}{0}{0}", thing));
-=======
+
                     Console.WriteLine(string.Format("{0} {0} {0}", thing));
->>>>>>> master
+
                 }
                 digit++;
             }
