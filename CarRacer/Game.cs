@@ -22,6 +22,19 @@ namespace CarRacer
             // read user input as string and switch (default case calls ShowMenu() again)
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Green;
+
+            Console.BufferHeight = Console.WindowHeight = 45;
+            Console.BufferWidth = Console.WindowWidth = 70;
+
+            int position = 0;
+
+            for (int i = 0; i < 5; i++)
+            {
+                PrintLogo(position, position + i);
+                Thread.Sleep(1000);
+                Console.Clear();
+            }
+
             centerText("=================");
             centerText("=== CAR RACER ===");
             centerText("=================");
@@ -35,13 +48,15 @@ namespace CarRacer
             centerText("3. About");
             centerText("4. Exit");
 
+            
+
             Console.Write("Enter menu number: ");
             string userChoice = Console.ReadLine();
 
             switch (userChoice)
             {
                 case "1":
-                    InitializeGame();
+                    ChooseDiff();
                     break;
                 case "2":
                     ViewHighScores();
@@ -65,6 +80,84 @@ namespace CarRacer
         {
             Console.Write(new string(' ', (Console.WindowWidth - text.Length) / 2));
             Console.WriteLine(text);
+        }
+
+        static void PrintLogo(int x, int y)
+        {
+            Console.SetCursorPosition(x, y);
+            centerText("=================");
+            centerText("=== CAR RACER ===");
+            centerText("=================");
+            Console.WriteLine(@"
+                                                        #@@@@,     
+                                                        @;`;@@     
+                             ,@#';,.                      @@@@     
+                         `@@@@@@@@@@@@@@@@@@@@' :@@@@@@@@@@@@#     
+                       @@@@@@@@@@@@@@@@@@@; .#@@@@@@@@@@    ,@@@   
+                    ` '@@@@@@@@@@@@@+,  :@@@@@@@@@@@@@, #@@@@; @@  
+             ;@@@@@@@@@@',`     .:'@@@@@@@@@@@@@@@@@@ #@@@#@@@@`@` 
+          +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@#     `@@.  
+        @.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#,@+        @@  
+      #` @@@@@     '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@          @# 
+    `' `@@@@' @@@@#  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @.          @@ 
+   ' ,@@@@@+.@@@+@@@  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@:@           #@ 
+  #@@@@@@@@ @@     @@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@;@           +@ 
+ +@@@@@@@@@@@       @,`@@@@@@@@@@@@@@@@@@@@@@@@@@@@.@           @@ 
+ #@@@@@@@@;@@       @@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@ @+          @@ 
+  @@@@@@@@'@@       @@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@'@@         +@, 
+  @@@@@@@@@@@       @#:@@@@@@@@@@@@@#+@@@@@@@@@@@@@@ @@       ;@@  
+  @` ,@@@@@;@       @ @@@@@@;`                       .@@+   `@@@   
+    `;#@@@@ @@`   `@# @;                               @@@@@@@@    
+             @@@@@@# `                                   '@#:      
+               +@'                                                 ");
+            // prints single char at certain position
+            // useful for lane separators ( '|' ) and for collecting bonuses (lives?)
+        } // end void PrintAtPosition(int x, int y, char symbol, ConsoleColor color)
+
+        public void ChooseDiff()
+        {
+            Console.BufferHeight = Console.WindowHeight = 45;
+            Console.BufferWidth = Console.WindowWidth = 70;
+
+                PrintLogo(0, 0);
+                Thread.Sleep(1000);
+                Console.Clear();
+
+            centerText("=================");
+            centerText("=== CAR RACER ===");
+            centerText("=================");
+            Console.WriteLine();
+            centerText("Choose difficulty");
+            Console.WriteLine();
+            centerText("====");
+            centerText("1. Driver");
+            centerText("2. Racer");
+            centerText("3. F1");
+            centerText("4. Go back");
+
+            Console.Write("Enter menu number: ");
+            string userChoice = Console.ReadLine();
+
+            switch (userChoice)
+            {
+                case "1":
+                    InitializeGame();
+                    break;
+                case "2":
+                    InitializeGame();
+                    break;
+                case "3":
+                    InitializeGame();
+                    break;
+                case "4":
+                    ShowMenu();
+                    break;
+                default:
+                    Console.WriteLine("Invalid input!");
+                    Thread.Sleep(1000);
+                    ChooseDiff();
+                    break;
+            }
         }
 
         #region MENU_OPTIONS

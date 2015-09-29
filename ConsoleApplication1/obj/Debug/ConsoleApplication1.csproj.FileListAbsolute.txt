@@ -1,0 +1,5 @@
+K:\Drive\Документи\GitHub\Team-Elatha-Game\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe.config
+K:\Drive\Документи\GitHub\Team-Elatha-Game\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
+K:\Drive\Документи\GitHub\Team-Elatha-Game\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
+K:\Drive\Документи\GitHub\Team-Elatha-Game\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
+K:\Drive\Документи\GitHub\Team-Elatha-Game\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb
