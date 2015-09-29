@@ -465,6 +465,8 @@ namespace CarRacer
 
         void CheckForHighscore(int score, string player)
         {
+            Console.BufferHeight = Console.WindowHeight = 45;
+            Console.BufferWidth = Console.WindowWidth = 70;
             if (File.Exists(highScoreFilePath))
             {
                 string[] highestScore = File.ReadAllLines(highScoreFilePath);
@@ -473,14 +475,14 @@ namespace CarRacer
 
                 if (score >= int.Parse(match.Groups[2].ToString()))
                 {
-                    string greating = string.Format("     Congratulations " + player + "!     ");
+                    string greating = string.Format("  Congratulations " + player + "!  ");
                     int spacesCount = (greating.Length - string.Format("Highscore: " + score).Length) / 2;
                     string highScore = string.Format(new string(' ', spacesCount) + "Highscore: " + score + new string(' ', spacesCount));
-                    Console.SetCursorPosition(Console.WindowWidth - greating.Length / 2, Console.WindowHeight + 1);
+                    Console.SetCursorPosition((Console.WindowWidth - greating.Length) / 2, Console.WindowHeight / 2 + 1);
                     Console.Write(greating);
-                    Console.SetCursorPosition(Console.WindowWidth - greating.Length / 2, Console.WindowHeight);
+                    Console.SetCursorPosition((Console.WindowWidth - greating.Length) / 2, Console.WindowHeight / 2);
                     Console.Write(new string(' ', greating.Length - 1));
-                    Console.SetCursorPosition(Console.WindowWidth - greating.Length / 2, Console.WindowHeight - 1);
+                    Console.SetCursorPosition((Console.WindowWidth - greating.Length) / 2, Console.WindowHeight / 2 - 1);
                     Console.Write(highScore);
                 }
                 else
@@ -493,11 +495,11 @@ namespace CarRacer
                 string greating = string.Format("     Congratulations " + player + "!     ");
                 int spacesCount = (greating.Length - string.Format("Highscore: " + score).Length) / 2;
                 string highScore = string.Format(new string(' ', spacesCount) + "Highscore: " + score + new string(' ', spacesCount));
-                Console.SetCursorPosition(Console.WindowWidth - greating.Length / 2, Console.WindowHeight - 1);
+                Console.SetCursorPosition((Console.WindowWidth - greating.Length) / 2, Console.WindowHeight / 2 + 1);
                 Console.Write(greating);
-                Console.SetCursorPosition(Console.WindowWidth - greating.Length / 2, Console.WindowHeight);
+                Console.SetCursorPosition((Console.WindowWidth - greating.Length) / 2, Console.WindowHeight / 2);
                 Console.Write(new string(' ', greating.Length - 1));
-                Console.SetCursorPosition(Console.WindowWidth - greating.Length / 2, Console.WindowHeight + 1);
+                Console.SetCursorPosition((Console.WindowWidth - greating.Length) / 2, Console.WindowHeight / 2 - 1);
                 Console.Write(highScore);
             }
         }
