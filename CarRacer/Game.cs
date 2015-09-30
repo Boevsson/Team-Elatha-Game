@@ -120,7 +120,7 @@ namespace CarRacer
             }
         } // end private void ChooseDiff()
 
-        private void InitializeGame(int speed, int newCarInterval)
+        private void InitializeGame(int speed, int spawnCarInterval)
         {
             Console.Write("Enter your nickname...");
             player = Console.ReadLine();
@@ -134,6 +134,7 @@ namespace CarRacer
 
             Random random = new Random();
 
+            int newCarInterval = 0;
             int newCollectibleInterval = 0;
 
             while (true)
@@ -152,7 +153,7 @@ namespace CarRacer
                     newCarInterval = -2;
                 }
 
-                if (newCarInterval > 5)
+                if (newCarInterval > spawnCarInterval)
                 {
                     Car addCar = SpawnCar(random.Next(1, 6));
                     carsList.Add(addCar);
