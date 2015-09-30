@@ -293,6 +293,12 @@ namespace CarRacer
                                 }
                             }
                             break;
+
+                        case ConsoleKey.Escape:
+                            {
+                                IngameMenu();
+                            }
+                            break;
                     }
 
                     //while (Console.KeyAvailable)
@@ -311,6 +317,79 @@ namespace CarRacer
             }
 
         } // end private void InitializeGame(int speed, int newCarInterval)
+
+        private void PrintAtPosition(string toPrint, int x, int y)
+        {
+            Console.SetCursorPosition(x, y);
+            Console.WriteLine(toPrint);
+        }
+        private void IngameMenu()
+        {
+            int pointerX = 1;
+            int pointerY = 4;
+
+
+
+            int continueRow = 4;
+            //int startMenuRow = 5;
+            int exitGameRow = 5;
+
+            int menuTopRow = continueRow;
+            int menuBotRow = exitGameRow;
+
+            //Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.SetCursorPosition(2, 2);
+
+            PrintAtPosition("Pause", 6, 2);
+            PrintAtPosition("=====", 6, 3);
+            PrintAtPosition("1. Continue", 2, continueRow);
+            PrintAtPosition("2. Exit game", 2, exitGameRow);
+
+
+            PrintAtPosition(">", pointerX, pointerY);
+            ConsoleKeyInfo info = Console.ReadKey();
+            while (info.Key != ConsoleKey.Enter)
+            {
+                if (info.Key == ConsoleKey.Escape)
+                {
+                    pointerY = continueRow;
+                    break;
+                }
+                if (info.Key == ConsoleKey.DownArrow && pointerY < menuBotRow)
+                {
+                    PrintAtPosition(" ", pointerX, pointerY);
+                    pointerY++;
+                }
+                else if (info.Key == ConsoleKey.UpArrow && pointerY > menuTopRow)
+                {
+                    PrintAtPosition(" ", pointerX, pointerY);
+                    pointerY--;
+                }
+
+                PrintAtPosition(">", pointerX, pointerY);
+                info = Console.ReadKey();
+            }
+
+            if (pointerY == exitGameRow)
+            {
+                Environment.Exit(0);
+            }
+            else if (pointerY == continueRow)
+            {
+                PrintAtPosition("Resuming game in:", 2, exitGameRow + 2);
+                for (int i = 1; i <= 3; i++)
+                {
+                    PrintAtPosition(i.ToString(), "Resuming game in:".Length / 2 + 2, exitGameRow + 4);
+                    Thread.Sleep(1000);
+                }
+                return;
+            }
+
+
+            Console.ReadLine();
+        }
+
 
         private void AboutGame()
         {

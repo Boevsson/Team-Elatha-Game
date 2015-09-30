@@ -22,3 +22,9 @@ C:\Users\pc\Desktop\Github\teamwork\Team-Elatha-Game\CarRacer\obj\Debug\CarRacer
 C:\Users\pc\Desktop\Github\teamwork\Team-Elatha-Game\CarRacer\bin\Debug\CarRacer.exe
 C:\Users\pc\Desktop\Github\teamwork\Team-Elatha-Game\CarRacer\bin\Debug\CarRacer.pdb
 C:\Users\pc\Desktop\Github\teamwork\Team-Elatha-Game\CarRacer\obj\Debug\CarRacer.csprojResolveAssemblyReference.cache
+D:\SoftUni\Module 1\Advanced C#\Team Project\GIT - Personal Branch\AT branch - Team-Elatha-Game\CarRacer\bin\Debug\CarRacer.exe.config
+D:\SoftUni\Module 1\Advanced C#\Team Project\GIT - Personal Branch\AT branch - Team-Elatha-Game\CarRacer\obj\Debug\CarRacer.exe
+D:\SoftUni\Module 1\Advanced C#\Team Project\GIT - Personal Branch\AT branch - Team-Elatha-Game\CarRacer\obj\Debug\CarRacer.pdb
+D:\SoftUni\Module 1\Advanced C#\Team Project\GIT - Personal Branch\AT branch - Team-Elatha-Game\CarRacer\bin\Debug\CarRacer.exe
+D:\SoftUni\Module 1\Advanced C#\Team Project\GIT - Personal Branch\AT branch - Team-Elatha-Game\CarRacer\bin\Debug\CarRacer.pdb
+D:\SoftUni\Module 1\Advanced C#\Team Project\GIT - Personal Branch\AT branch - Team-Elatha-Game\CarRacer\obj\Debug\CarRacer.csprojResolveAssemblyReference.cache
