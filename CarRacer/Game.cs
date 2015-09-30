@@ -14,6 +14,9 @@ namespace CarRacer
         // global variables
         protected static int trackOffsetRight = 25;
         protected string highScoreFilePath = @"Scores.txt";
+        protected double score = 0;
+        protected int lives = 1;
+        protected string player = string.Empty;
 
         public void PlayGame()
         {
@@ -98,10 +101,10 @@ namespace CarRacer
             switch (userChoice)
             {
                 case "1":
-                    InitializeGame(200, 7);
+                    InitializeGame(50, 7);
                     break;
                 case "2":
-                    InitializeGame(175, 6);
+                    InitializeGame(100, 6);
                     break;
                 case "3":
                     InitializeGame(150, 5);
@@ -117,23 +120,21 @@ namespace CarRacer
             }
         } // end private void ChooseDiff()
 
-        private void InitializeGame(int speed, int newCarInterval)
+        private void InitializeGame(int speed, int spawnCarInterval)
         {
             Console.Write("Enter your nickname...");
-            string player = Console.ReadLine();
+            player = Console.ReadLine();
 
             // variables
             List<Car> carsList = new List<Car>();
             List<Coin> collectibles = new List<Coin>();
-
-            double score = 0;
-            int lives = 1;
 
             // initialize player car
             Car myCar = new Car(34, 35, ConsoleColor.Red);
 
             Random random = new Random();
 
+            int newCarInterval = 0;
             int newCollectibleInterval = 0;
 
             while (true)
@@ -152,7 +153,7 @@ namespace CarRacer
                     newCarInterval = -2;
                 }
 
-                if (newCarInterval > 5)
+                if (newCarInterval > spawnCarInterval)
                 {
                     Car addCar = SpawnCar(random.Next(1, 6));
                     carsList.Add(addCar);
@@ -169,13 +170,24 @@ namespace CarRacer
 
                 }
 
-                PrintCarAtPosition(myCar.X, myCar.Y, "*", myCar.Color);
+                Console.SetCursorPosition(trackOffsetRight + 5 * 5, 2);
+                Console.WriteLine(player);
+                Console.SetCursorPosition(trackOffsetRight + 5 * 5, 4);
+                Console.WriteLine("Score: {0:F2}", score);
+                Console.SetCursorPosition(trackOffsetRight + 5 * 5, 6);
+                Console.WriteLine("Lives: {0}", lives);
+                Console.SetCursorPosition(trackOffsetRight + 5 * 5, 8);
+                Console.WriteLine("Speed: {0}", speed);
+                // Position = track offset + 4 lanes, 5 chars each + aditional buffer 5
 
+                PrintCar(myCar);
+                //PrintCarAtPosition(myCar.X, myCar.Y, "*", myCar.Color);
 
 
                 foreach (var car in carsList)
                 {
-                    PrintCarAtPosition(car.X, car.Y, "*", car.Color);
+                    PrintCar(car);
+                    //PrintCarAtPosition(car.X, car.Y, "*", car.Color);
                     car.Y++;
                 }
                 for (int i = 0; i < carsList.Count; i++)
@@ -183,6 +195,7 @@ namespace CarRacer
                     if (carsList[i].Y > Console.WindowHeight - 5)
                     {
                         carsList.Remove(carsList[i]);
+                        score += 5 ;
                     }
                 }
 
@@ -202,6 +215,10 @@ namespace CarRacer
                 if (Console.KeyAvailable)
                 {
                     ConsoleKeyInfo pressedKey = Console.ReadKey();
+                    while (Console.KeyAvailable)
+                    {
+                        Console.ReadKey();
+                    }
 
                     switch (pressedKey.Key)
                     {
@@ -244,36 +261,14 @@ namespace CarRacer
                     //    pressedKey = Console.ReadKey();
                     //}
                 }
-
-                Thread.Sleep(speed);
+                score += (0.2) * speed / 240;
+                Thread.Sleep(250-speed);
                 Console.Clear();
                 newCarInterval++;
                 newCollectibleInterval++;
 
-                // logic behind spawning cars and buffs
-                // spawn a car
-                // spawn +1 live buffs
+                // todo: collision detection
 
-                // move player car (ConsoleKeyInfo
-                // ConsoleKey.LeftArrow, RighthArrow, UpArrow, DownArrow)
-
-
-
-                // move other cars, buffs
-                // create new list of cars, foreach element in carList create new car object 
-
-                // collision detection
-                // lives--, possible GameOver(score, username)
-
-                // clear all after each thread.sleep
-
-                // draw player car ( collision => clear other cars from screen, reduce speed, visually show hit)
-
-                // draw other cars, buffs
-
-                // draw score and lives
-
-                // control speed and score
             }
 
         } // end private void InitializeGame(int speed, int newCarInterval)
@@ -380,8 +375,7 @@ namespace CarRacer
 
         private void CheckForHighscore(int score, string player)
         {
-            Console.BufferHeight = Console.WindowHeight = 45;
-            Console.BufferWidth = Console.WindowWidth = 70;
+
             if (File.Exists(highScoreFilePath))
             {
                 string[] highestScore = File.ReadAllLines(highScoreFilePath);
@@ -463,7 +457,7 @@ namespace CarRacer
             }
         } // end private void ClearBox()
 
-        private void GameOver(int score, string player)
+        private void GameOver(double score, string player)
         {   // Endgame screen?
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Red;
@@ -585,6 +579,25 @@ namespace CarRacer
             Console.BufferHeight = Console.WindowHeight = 45;
             Console.BufferWidth = Console.WindowWidth = 70;
         } // end private void ResetBuffer()
+
+        private void PrintCar(Car car)
+        {
+            int counterY = 0;
+            int counterX = 0;
+            for (int i = 0; i < car.Vehicle.Length; i++)
+            {
+                Console.SetCursorPosition(car.X + counterX, car.Y + counterY);
+                Console.Write(car.Vehicle[i]);
+                counterX++;
+                if (car.Vehicle[i] == '\n')
+                {
+                    counterY++;
+                    counterX = 0;
+
+                }
+            }
+        } // end private void PrintCar(Car car)
+
 
         private void PrintCarAtPosition(int x, int y, string thing, ConsoleColor color)
         {
