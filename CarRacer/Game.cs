@@ -30,27 +30,27 @@ namespace CarRacer
 
         private void ShowMenu()
         {
-            Console.Clear();
+            //Console.Clear();
             Console.ForegroundColor = ConsoleColor.Green;
 
-            centerText("=================");
-            centerText("=== CAR RACER ===");
-            centerText("=================");
-            Console.WriteLine();
-            centerText("Welcome to Car Racer!");
-            Console.WriteLine();
-            centerText("MENU");
-            centerText("====");
-            centerText("1. New Game");
-            centerText("2. Highscore");
-            centerText("3. About");
-            centerText("4. Exit");
+            //centerText("=================");
+            //centerText("=== CAR RACER ===");
+            //centerText("=================");
+            //Console.WriteLine();
+            //centerText("Welcome to Car Racer!");
+            //Console.WriteLine();
+            //centerText("MENU");
+            //centerText("====");
+            //centerText("1. New Game");
+            //centerText("2. Highscore");
+            //centerText("3. About");
+            //centerText("4. Exit");
 
             
 
-            Console.WriteLine();
-            Console.Write(new string(' ', (Console.WindowWidth - "Enter menu number: ".Length) / 2));
-            Console.Write("Enter menu number: ");
+            //Console.WriteLine();
+            //Console.Write(new string(' ', (Console.WindowWidth - "Enter menu number: ".Length) / 2));
+            //Console.Write("Enter menu number: ");
             string userChoice = Console.ReadLine();
 
             switch (userChoice)
@@ -596,7 +596,7 @@ namespace CarRacer
 
                 if (cycle == 0)
                 {
-                    Thread.Sleep(500);
+                    Thread.Sleep(1000);
                 }
                 else
                 {
