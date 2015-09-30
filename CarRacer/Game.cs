@@ -199,23 +199,46 @@ namespace CarRacer
 
                 foreach (var car in carsList)
                 {
+                    car.Y++;
                     PrintCar(car);
                     //PrintCarAtPosition(car.X, car.Y, "*", car.Color);
-                    car.Y++;
+
+                    if (car.X == myCar.X && myCar.Y >= car.Y && myCar.Y <= car.Y + 4)
+                    {
+                        PrintCarAtPosition(myCar.X, myCar.Y, "X", ConsoleColor.DarkRed);
+
+                        PlaySound("Crash");
+                        lives--;
+
+                        if (lives <= 0)
+                        {
+                            GameOver(score, player);
+                        }
+
+                        carsList.Clear();
+                        Console.Clear();
+                        goto RestartRace;
+                    }
                 }
                 for (int i = 0; i < carsList.Count; i++)
                 {
-                    if (carsList[i].Y > Console.WindowHeight - 5)
+                    if (carsList[i].Y >= Console.WindowHeight - 5)
                     {
                         carsList.Remove(carsList[i]);
-                        score += 5 ;
+                        score += 5;
                     }
                 }
 
                 foreach (var bonusCoin in collectibles)
                 {
-                    PrintAtPosition(bonusCoin.X, bonusCoin.Y, bonusCoin.Symbol, bonusCoin.Color);
                     bonusCoin.Y++;
+                    PrintAtPosition(bonusCoin.X, bonusCoin.Y, bonusCoin.Symbol, bonusCoin.Color);
+                    if (bonusCoin.X >= myCar.X && bonusCoin.X <= (myCar.X + 2) && bonusCoin.Y >= myCar.Y && bonusCoin.Y <= (myCar.Y + 3))
+                    {
+                        PrintCarAtPosition(myCar.X, myCar.Y, "X", ConsoleColor.Yellow);
+                        score += 10;
+                    }
+
                 }
                 for (int i = 0; i < collectibles.Count; i++)
                 {
@@ -274,28 +297,6 @@ namespace CarRacer
                     //    pressedKey = Console.ReadKey();
                     //}
                 }
-                List<Car> carInNewPositions = new List<Car>();
-
-                for (int i = 0; i < carsList.Count; i++)
-                {
-
-                    Car carInOldPosition = carsList[i];
-                    Car carInNewPosition = new Car();
-                    carInNewPosition.X = carInOldPosition.X;
-                    carInNewPosition.Y = carInOldPosition.Y + 1;
-                    carInNewPosition.Color = carInOldPosition.Color;
-
-
-                    
-                    if (carInNewPosition.X == myCar.X && carInNewPosition.Y == myCar.Y)
-                    {
-                        PrintCarAtPosition(myCar.X, myCar.Y, "X", ConsoleColor.DarkRed);
-                        PlaySound("Crash");
-                        carsList.Clear();
-                    }
-                }// Check :Is myCar hitting the other car ?
-                
- 
                 score += (0.2) * speed / 240;
                 Thread.Sleep(250-speed);
                 Console.Clear();
