@@ -15,7 +15,7 @@ namespace CarRacer
         protected static int trackOffsetRight = 25;
         protected string highScoreFilePath = @"Scores.txt";
         protected double score = 0;
-        protected int lives = 1;
+        protected int lives = 3;
         protected string player = string.Empty;
 
         public void PlayGame()
@@ -142,7 +142,8 @@ namespace CarRacer
             List<Car> carsList = new List<Car>();
             List<Coin> collectibles = new List<Coin>();
 
-            // initialize player car
+        // initialize player car
+        RestartRace:
             Car myCar = new Car(34, 35, ConsoleColor.Red);
 
             Random random = new Random();
@@ -158,7 +159,7 @@ namespace CarRacer
                 {
                     Coin bonus = new Coin();
                     int bonusLane = random.Next(0, 5);
-                    bonus.X = trackOffsetRight + 2 + 4 * bonusLane; 
+                    bonus.X = trackOffsetRight + 2 + 4 * bonusLane;
                     // 21-> where the first lane starts; 2-> half the width of the lane; 4-> the width of one lane
                     bonus.Y = 1;
                     collectibles.Add(bonus);
@@ -199,27 +200,52 @@ namespace CarRacer
 
                 foreach (var car in carsList)
                 {
+                    car.Y++;
                     PrintCar(car);
                     //PrintCarAtPosition(car.X, car.Y, "*", car.Color);
-                    car.Y++;
+
+                    if (car.X == myCar.X && myCar.Y >= car.Y && myCar.Y <= car.Y + 4)
+                    {
+                        PrintCarAtPosition(myCar.X, myCar.Y, "X", ConsoleColor.DarkRed);
+
+                        PlaySound("Crash");
+                        lives--;
+
+                        if (lives <= 0)
+                        {
+                            GameOver(score, player);
+                        }
+
+                        Thread.Sleep(1200);
+                        carsList.Clear();
+                        Console.Clear();
+                        goto RestartRace;
+                    }
                 }
                 for (int i = 0; i < carsList.Count; i++)
                 {
-                    if (carsList[i].Y > Console.WindowHeight - 5)
+                    if (carsList[i].Y >= Console.WindowHeight - 5)
                     {
                         carsList.Remove(carsList[i]);
-                        score += 5 ;
+                        score += 5;
                     }
                 }
 
                 foreach (var bonusCoin in collectibles)
                 {
-                    PrintAtPosition(bonusCoin.X, bonusCoin.Y, bonusCoin.Symbol, bonusCoin.Color);
                     bonusCoin.Y++;
+                    PrintAtPosition(bonusCoin.X, bonusCoin.Y, bonusCoin.Symbol, bonusCoin.Color);
+                    if (bonusCoin.X >= myCar.X && bonusCoin.X <= (myCar.X + 2) && bonusCoin.Y >= myCar.Y && bonusCoin.Y <= (myCar.Y + 3))
+                    {
+                        PrintCarAtPosition(myCar.X, myCar.Y, "X", ConsoleColor.Yellow);
+                        score += 10;
+                        bonusCoin.Y = Console.WindowHeight;
+                    }
+
                 }
                 for (int i = 0; i < collectibles.Count; i++)
                 {
-                    if (collectibles[i].Y > Console.WindowHeight - 1)
+                    if (collectibles[i].Y >= Console.WindowHeight - 1)
                     {
                         collectibles.Remove(collectibles[i]);
                     }
@@ -274,30 +300,8 @@ namespace CarRacer
                     //    pressedKey = Console.ReadKey();
                     //}
                 }
-                List<Car> carInNewPositions = new List<Car>();
-
-                for (int i = 0; i < carsList.Count; i++)
-                {
-
-                    Car carInOldPosition = carsList[i];
-                    Car carInNewPosition = new Car();
-                    carInNewPosition.X = carInOldPosition.X;
-                    carInNewPosition.Y = carInOldPosition.Y + 1;
-                    carInNewPosition.Color = carInOldPosition.Color;
-
-
-                    
-                    if (carInNewPosition.X == myCar.X && carInNewPosition.Y == myCar.Y)
-                    {
-                        PrintCarAtPosition(myCar.X, myCar.Y, "X", ConsoleColor.DarkRed);
-                        PlaySound("Crash");
-                        carsList.Clear();
-                    }
-                }// Check :Is myCar hitting the other car ?
-                
- 
                 score += (0.2) * speed / 240;
-                Thread.Sleep(250-speed);
+                Thread.Sleep(250 - speed);
                 Console.Clear();
                 newCarInterval++;
                 newCollectibleInterval++;
@@ -581,7 +585,7 @@ namespace CarRacer
      #` @@@@@     '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@          @#                                     3. About
    `' `@@@@' @@@@#  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @.          @@                                     4. Exit 
   ' ,@@@@@+.@@@+@@@  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@:@           #@                                   
- #@@@@@@@@ @@     @@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@;@           +@                                Enter menu number:
+ #@@@@@@@@ @@     @@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@;@           +@                               Enter menu number:
 +@@@@@@@@@@@       @,`@@@@@@@@@@@@@@@@@@@@@@@@@@@@.@           @@                                
 #@@@@@@@@;@@       @@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@ @+          @@                                  
  @@@@@@@@'@@       @@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@'@@         +@,                                  
@@ -631,7 +635,7 @@ namespace CarRacer
                     Console.Clear();
                 }
             }
-    }
+        }
 
         private void centerText(String text)
         {
@@ -643,9 +647,9 @@ namespace CarRacer
         private void PrintLogo(int x, int y, string logo)
         {
             Console.SetCursorPosition(x, y);
-            
 
-            
+
+
 
         } // end private void PrintLogo(int x, int y)
 
@@ -735,6 +739,6 @@ namespace CarRacer
         } // end private void PrintAtPosition(int x, int y, char symbol, ConsoleColor color)
 
         #endregion
-        
+
     } // end class Game
 } // end namespace CarRacer
