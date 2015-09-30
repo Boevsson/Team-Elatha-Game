@@ -81,7 +81,7 @@ namespace CarRacer
         private void ChooseDiff()
         {
             Console.Clear();
-
+            PlaySound("Menu");
             centerText("=================");
             centerText("=== CAR RACER ===");
             centerText("=================");
@@ -102,13 +102,13 @@ namespace CarRacer
             switch (userChoice)
             {
                 case "1":
-                    InitializeGame(50, 7);
+                    InitializeGame(50, 7, "Driver");
                     break;
                 case "2":
-                    InitializeGame(100, 6);
+                    InitializeGame(100, 6, "Racer");
                     break;
                 case "3":
-                    InitializeGame(150, 5);
+                    InitializeGame(150, 5, "F1");
                     break;
                 case "4":
                     ShowMenu();
@@ -121,19 +121,21 @@ namespace CarRacer
             }
         } // end private void ChooseDiff()
 
-        private void PlayIntro()
+        private void PlaySound(string sound)
         {
             System.Media.SoundPlayer player = new System.Media.SoundPlayer();
-            player.SoundLocation = @"..\..\..\Sounds\Intro.wav";
+            player.SoundLocation = @"..\..\..\Sounds\" + sound + ".wav";
             player.Play();
         }
 
-        private void InitializeGame(int speed, int spawnCarInterval)
+        private void InitializeGame(int speed, int spawnCarInterval, string sound)
         {
             Console.WriteLine();
             Console.Write(new string(' ', (Console.WindowWidth - "Enter your nickname: ".Length) / 2));
             Console.Write("Enter your nickname: ");
             player = Console.ReadLine();
+
+            PlaySound(sound);
 
             // variables
             List<Car> carsList = new List<Car>();
@@ -345,6 +347,8 @@ namespace CarRacer
 
         private void ViewHighScores()
         {
+
+            PlaySound("Credits_HighScore");
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Green;
 
@@ -352,16 +356,21 @@ namespace CarRacer
             {
                 string[] scores = File.ReadAllLines(highScoreFilePath);
 
+                centerText("=================");
+                centerText("=== CAR RACER ===");
+                centerText("=================");
+
                 Console.WriteLine();
-                Console.WriteLine("Highscores");
+                centerText("Highscores");
                 Console.WriteLine();
+                centerText("====");
 
                 for (int i = 0; i < 10 && i < scores.Length; i++)
                 {
-                    Console.WriteLine(scores[i]);
+                    centerText(scores[i]);
                 }
                 Console.WriteLine();
-                Console.WriteLine("Press any key to go back to menu");
+                centerText("Press any key to go back to menu");
 
                 ConsoleKeyInfo keyPressed = Console.ReadKey();
 
@@ -369,12 +378,15 @@ namespace CarRacer
             }
             else
             {
+                centerText("=================");
+                centerText("=== CAR RACER ===");
+                centerText("=================");
                 Console.WriteLine();
-                Console.WriteLine("Highscores");
+                centerText("There are no highscores yet");
                 Console.WriteLine();
-                Console.WriteLine("There are no highscores yet");
+                centerText("====");
                 Console.WriteLine();
-                Console.WriteLine("Press any key to go back to menu");
+                centerText("Press any key to go back to menu");
 
                 ConsoleKeyInfo keyPressed = Console.ReadKey();
 
@@ -556,7 +568,7 @@ namespace CarRacer
             @@@@@@# `                                   '@#:      
               +@'                                                 ";
 
-            PlayIntro();
+            PlaySound("Intro");
             Print(logo);
         } // end private void CascadeLogo()
 
