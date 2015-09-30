@@ -328,11 +328,9 @@ namespace CarRacer
             int pointerX = 1;
             int pointerY = 4;
 
-
-
             int continueRow = 4;
-            //int startMenuRow = 5;
-            int exitGameRow = 5;
+            int endThisGameRow = 5;
+            int exitGameRow = 6;
 
             int menuTopRow = continueRow;
             int menuBotRow = exitGameRow;
@@ -344,7 +342,8 @@ namespace CarRacer
             PrintAtPosition("Pause", 6, 2);
             PrintAtPosition("=====", 6, 3);
             PrintAtPosition("1. Continue", 2, continueRow);
-            PrintAtPosition("2. Exit game", 2, exitGameRow);
+            PrintAtPosition("2. End race", 2, endThisGameRow);
+            PrintAtPosition("3. Exit game", 2, exitGameRow);
 
 
             PrintAtPosition(">", pointerX, pointerY);
@@ -384,6 +383,10 @@ namespace CarRacer
                     Thread.Sleep(1000);
                 }
                 return;
+            }
+            else if (pointerY == endThisGameRow)
+            {
+                GameOver(score, player);
             }
 
 
