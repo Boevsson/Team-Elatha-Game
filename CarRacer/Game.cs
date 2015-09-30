@@ -290,9 +290,7 @@ namespace CarRacer
                     if (carInNewPosition.X == myCar.X && carInNewPosition.Y == myCar.Y)
                     {
                         PrintCarAtPosition(myCar.X, myCar.Y, "X", ConsoleColor.DarkRed);
-
-                        Console.Beep(500, 1000);
-
+                        PlaySound("Crash");
                         carsList.Clear();
                     }
                 }// Check :Is myCar hitting the other car ?
