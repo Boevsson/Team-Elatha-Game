@@ -30,27 +30,28 @@ namespace CarRacer
 
         private void ShowMenu()
         {
-            //Console.Clear();
+            Console.Clear();
             Console.ForegroundColor = ConsoleColor.Green;
 
-            //centerText("=================");
-            //centerText("=== CAR RACER ===");
-            //centerText("=================");
-            //Console.WriteLine();
-            //centerText("Welcome to Car Racer!");
-            //Console.WriteLine();
-            //centerText("MENU");
-            //centerText("====");
-            //centerText("1. New Game");
-            //centerText("2. Highscore");
-            //centerText("3. About");
-            //centerText("4. Exit");
+            centerText("=================");
+            centerText("=== CAR RACER ===");
+            centerText("=================");
+            Console.WriteLine();
+            centerText("Welcome to Car Racer!");
+            Console.WriteLine();
+            centerText("MENU");
+            centerText("====");
+            centerText("1. New Game");
+            centerText("2. Highscore");
+            centerText("3. About");
+            centerText("4. Exit");
 
-            
 
-            //Console.WriteLine();
-            //Console.Write(new string(' ', (Console.WindowWidth - "Enter menu number: ".Length) / 2));
-            //Console.Write("Enter menu number: ");
+
+            Console.WriteLine();
+            Console.Write(new string(' ', (Console.WindowWidth - "Enter menu number: ".Length) / 2));
+            Console.Write("Enter menu number: ");
+            //Console.SetCursorPosition(45, 18);
             string userChoice = Console.ReadLine();
 
             switch (userChoice)
@@ -545,25 +546,25 @@ namespace CarRacer
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Green;
 
-            string logo = @"
-                                                       #@@@@,    
-                                                       @;`;@@    
+            string logo = @"                                                                                                 =================
+                                                       #@@@@,                                    === CAR RACER ===
+                                                       @;`;@@                                    =================
                             ,@#';,.                      @@@@    
-                        `@@@@@@@@@@@@@@@@@@@@' :@@@@@@@@@@@@#    
-                      @@@@@@@@@@@@@@@@@@@; .#@@@@@@@@@@    ,@@@                                =================
-                   ` '@@@@@@@@@@@@@+,  :@@@@@@@@@@@@@, #@@@@; @@                               === CAR RACER ===
-            ;@@@@@@@@@@',`     .:'@@@@@@@@@@@@@@@@@@ #@@@#@@@@`@`                              =================
-         +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@#     `@@.  
-       @.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#,@+        @@                               Welcome to Car Racer!
-     #` @@@@@     '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@          @#
-   `' `@@@@' @@@@#  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @.          @@                                      MENU
-  ' ,@@@@@+.@@@+@@@  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@:@           #@                                      ====
- #@@@@@@@@ @@     @@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@;@           +@                                  1. New Game
-+@@@@@@@@@@@       @,`@@@@@@@@@@@@@@@@@@@@@@@@@@@@.@           @@                                  2. Highscore
-#@@@@@@@@;@@       @@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@ @+          @@                                  3. About
- @@@@@@@@'@@       @@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@'@@         +@,                                  4. Exit
+                        `@@@@@@@@@@@@@@@@@@@@' :@@@@@@@@@@@@#                                  Welcome to Car Racer!
+                      @@@@@@@@@@@@@@@@@@@; .#@@@@@@@@@@    ,@@@          
+                   ` '@@@@@@@@@@@@@+,  :@@@@@@@@@@@@@, #@@@@; @@                                        MENU
+            ;@@@@@@@@@@',`     .:'@@@@@@@@@@@@@@@@@@ #@@@#@@@@`@`                                       ====
+         +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@#     `@@.                                    1. New Game  
+       @.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#,@+        @@                                    2. Highscore
+     #` @@@@@     '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@          @#                                     3. About
+   `' `@@@@' @@@@#  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @.          @@                                     4. Exit 
+  ' ,@@@@@+.@@@+@@@  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@:@           #@                                   
+ #@@@@@@@@ @@     @@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@;@           +@                                Enter menu number:
++@@@@@@@@@@@       @,`@@@@@@@@@@@@@@@@@@@@@@@@@@@@.@           @@                                
+#@@@@@@@@;@@       @@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@ @+          @@                                  
+ @@@@@@@@'@@       @@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@'@@         +@,                                  
  @@@@@@@@@@@       @#:@@@@@@@@@@@@@#+@@@@@@@@@@@@@@ @@       ;@@  
- @` ,@@@@@;@       @ @@@@@@;`                       .@@+   `@@@                                 Enter menu number:
+ @` ,@@@@@;@       @ @@@@@@;`                       .@@+   `@@@                                 
    `;#@@@@ @@`   `@# @;                               @@@@@@@@    
             @@@@@@# `                                   '@#:      
               +@'                                                 ";
@@ -596,7 +597,7 @@ namespace CarRacer
 
                 if (cycle == 0)
                 {
-                    Thread.Sleep(1000);
+                    Thread.Sleep(1200);
                 }
                 else
                 {
