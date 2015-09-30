@@ -47,9 +47,11 @@ namespace CarRacer
             centerText("4. Exit");
 
 
+
             Console.WriteLine();
             Console.Write(new string(' ', (Console.WindowWidth - "Enter menu number: ".Length) / 2));
             Console.Write("Enter menu number: ");
+            //Console.SetCursorPosition(45, 18);
             string userChoice = Console.ReadLine();
 
             switch (userChoice)
@@ -80,7 +82,7 @@ namespace CarRacer
         private void ChooseDiff()
         {
             Console.Clear();
-
+            PlaySound("Menu");
             centerText("=================");
             centerText("=== CAR RACER ===");
             centerText("=================");
@@ -101,13 +103,13 @@ namespace CarRacer
             switch (userChoice)
             {
                 case "1":
-                    InitializeGame(50, 7);
+                    InitializeGame(50, 7, "Driver");
                     break;
                 case "2":
-                    InitializeGame(100, 6);
+                    InitializeGame(100, 6, "Racer");
                     break;
                 case "3":
-                    InitializeGame(150, 5);
+                    InitializeGame(150, 5, "F1");
                     break;
                 case "4":
                     ShowMenu();
@@ -120,10 +122,21 @@ namespace CarRacer
             }
         } // end private void ChooseDiff()
 
-        private void InitializeGame(int speed, int spawnCarInterval)
+        private void PlaySound(string sound)
         {
-            Console.Write("Enter your nickname...");
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer();
+            player.SoundLocation = @"..\..\..\Sounds\" + sound + ".wav";
+            player.Play();
+        }
+
+        private void InitializeGame(int speed, int spawnCarInterval, string sound)
+        {
+            Console.WriteLine();
+            Console.Write(new string(' ', (Console.WindowWidth - "Enter your nickname: ".Length) / 2));
+            Console.Write("Enter your nickname: ");
             player = Console.ReadLine();
+
+            PlaySound(sound);
 
             // variables
             List<Car> carsList = new List<Car>();
@@ -261,6 +274,28 @@ namespace CarRacer
                     //    pressedKey = Console.ReadKey();
                     //}
                 }
+                List<Car> carInNewPositions = new List<Car>();
+
+                for (int i = 0; i < carsList.Count; i++)
+                {
+
+                    Car carInOldPosition = carsList[i];
+                    Car carInNewPosition = new Car();
+                    carInNewPosition.X = carInOldPosition.X;
+                    carInNewPosition.Y = carInOldPosition.Y + 1;
+                    carInNewPosition.Color = carInOldPosition.Color;
+
+
+                    
+                    if (carInNewPosition.X == myCar.X && carInNewPosition.Y == myCar.Y)
+                    {
+                        PrintCarAtPosition(myCar.X, myCar.Y, "X", ConsoleColor.DarkRed);
+                        PlaySound("Crash");
+                        carsList.Clear();
+                    }
+                }// Check :Is myCar hitting the other car ?
+                
+ 
                 score += (0.2) * speed / 240;
                 Thread.Sleep(250-speed);
                 Console.Clear();
@@ -335,6 +370,8 @@ namespace CarRacer
 
         private void ViewHighScores()
         {
+
+            PlaySound("Credits_HighScore");
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Green;
 
@@ -342,16 +379,21 @@ namespace CarRacer
             {
                 string[] scores = File.ReadAllLines(highScoreFilePath);
 
+                centerText("=================");
+                centerText("=== CAR RACER ===");
+                centerText("=================");
+
                 Console.WriteLine();
-                Console.WriteLine("Highscores");
+                centerText("Highscores");
                 Console.WriteLine();
+                centerText("====");
 
                 for (int i = 0; i < 10 && i < scores.Length; i++)
                 {
-                    Console.WriteLine(scores[i]);
+                    centerText(scores[i]);
                 }
                 Console.WriteLine();
-                Console.WriteLine("Press any key to go back to menu");
+                centerText("Press any key to go back to menu");
 
                 ConsoleKeyInfo keyPressed = Console.ReadKey();
 
@@ -359,12 +401,15 @@ namespace CarRacer
             }
             else
             {
+                centerText("=================");
+                centerText("=== CAR RACER ===");
+                centerText("=================");
                 Console.WriteLine();
-                Console.WriteLine("Highscores");
+                centerText("There are no highscores yet");
                 Console.WriteLine();
-                Console.WriteLine("There are no highscores yet");
+                centerText("====");
                 Console.WriteLine();
-                Console.WriteLine("Press any key to go back to menu");
+                centerText("Press any key to go back to menu");
 
                 ConsoleKeyInfo keyPressed = Console.ReadKey();
 
@@ -522,15 +567,71 @@ namespace CarRacer
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Green;
-            int position = 0;
 
-            for (int i = 0; i < 5; i++)
-            {
-                PrintLogo(position, position + i);
-                Thread.Sleep(1000);
-                Console.Clear();
-            }
+            string logo = @"                                                                                                 =================
+                                                       #@@@@,                                    === CAR RACER ===
+                                                       @;`;@@                                    =================
+                            ,@#';,.                      @@@@    
+                        `@@@@@@@@@@@@@@@@@@@@' :@@@@@@@@@@@@#                                  Welcome to Car Racer!
+                      @@@@@@@@@@@@@@@@@@@; .#@@@@@@@@@@    ,@@@          
+                   ` '@@@@@@@@@@@@@+,  :@@@@@@@@@@@@@, #@@@@; @@                                        MENU
+            ;@@@@@@@@@@',`     .:'@@@@@@@@@@@@@@@@@@ #@@@#@@@@`@`                                       ====
+         +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@#     `@@.                                    1. New Game  
+       @.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#,@+        @@                                    2. Highscore
+     #` @@@@@     '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@          @#                                     3. About
+   `' `@@@@' @@@@#  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @.          @@                                     4. Exit 
+  ' ,@@@@@+.@@@+@@@  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@:@           #@                                   
+ #@@@@@@@@ @@     @@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@;@           +@                                Enter menu number:
++@@@@@@@@@@@       @,`@@@@@@@@@@@@@@@@@@@@@@@@@@@@.@           @@                                
+#@@@@@@@@;@@       @@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@ @+          @@                                  
+ @@@@@@@@'@@       @@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@'@@         +@,                                  
+ @@@@@@@@@@@       @#:@@@@@@@@@@@@@#+@@@@@@@@@@@@@@ @@       ;@@  
+ @` ,@@@@@;@       @ @@@@@@;`                       .@@+   `@@@                                 
+   `;#@@@@ @@`   `@# @;                               @@@@@@@@    
+            @@@@@@# `                                   '@#:      
+              +@'                                                 ";
+
+            PlaySound("Intro");
+            Print(logo);
         } // end private void CascadeLogo()
+
+        static void Print(string str)
+        {
+            string[] splittedString = str.Split('\n');
+            for (int cycle = 0; cycle <= Console.WindowWidth; cycle++)
+            {
+                for (int i = 0; i < splittedString.Length; i++)
+                {
+                    if (cycle < splittedString[i].Length)
+                    {
+                        string substring = splittedString[i].Substring(cycle);
+                        if (substring.Length > Console.WindowWidth - 1)
+                        {
+                            substring = substring.Substring(0, Console.WindowWidth - 1);
+                        }
+                        Console.WriteLine(substring);
+                    }
+                    else
+                    {
+                        Console.WriteLine();
+                    }
+                }
+
+                if (cycle == 0)
+                {
+                    Thread.Sleep(1200);
+                }
+                else
+                {
+                    Thread.Sleep(25);
+                }
+
+                if (cycle < Console.WindowWidth)
+                {
+                    Console.Clear();
+                }
+            }
+    }
 
         private void centerText(String text)
         {
@@ -538,34 +639,14 @@ namespace CarRacer
             Console.WriteLine(text);
         } // end private void centerText(String text)
 
-        private void PrintLogo(int x, int y)
+        // FOR DELETE!
+        private void PrintLogo(int x, int y, string logo)
         {
             Console.SetCursorPosition(x, y);
-            centerText("=================");
-            centerText("=== CAR RACER ===");
-            centerText("=================");
-            Console.WriteLine(@"
-                                                        #@@@@,     
-                                                        @;`;@@     
-                             ,@#';,.                      @@@@     
-                         `@@@@@@@@@@@@@@@@@@@@' :@@@@@@@@@@@@#     
-                       @@@@@@@@@@@@@@@@@@@; .#@@@@@@@@@@    ,@@@   
-                    ` '@@@@@@@@@@@@@+,  :@@@@@@@@@@@@@, #@@@@; @@  
-             ;@@@@@@@@@@',`     .:'@@@@@@@@@@@@@@@@@@ #@@@#@@@@`@` 
-          +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@#     `@@.  
-        @.@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#,@+        @@  
-      #` @@@@@     '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @@          @# 
-    `' `@@@@' @@@@#  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ @.          @@ 
-   ' ,@@@@@+.@@@+@@@  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@:@           #@ 
-  #@@@@@@@@ @@     @@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@;@           +@ 
- +@@@@@@@@@@@       @,`@@@@@@@@@@@@@@@@@@@@@@@@@@@@.@           @@ 
- #@@@@@@@@;@@       @@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@ @+          @@ 
-  @@@@@@@@'@@       @@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@'@@         +@, 
-  @@@@@@@@@@@       @#:@@@@@@@@@@@@@#+@@@@@@@@@@@@@@ @@       ;@@  
-  @` ,@@@@@;@       @ @@@@@@;`                       .@@+   `@@@   
-    `;#@@@@ @@`   `@# @;                               @@@@@@@@    
-             @@@@@@# `                                   '@#:      
-               +@'                                                 ");
+            
+
+            
+
         } // end private void PrintLogo(int x, int y)
 
         #endregion
