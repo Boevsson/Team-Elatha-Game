@@ -241,6 +241,7 @@ namespace CarRacer
                         PrintCarAtPosition(myCar.X, myCar.Y, "X", ConsoleColor.Yellow);
                         score += 10;
                         bonusCoin.Y = Console.WindowHeight;
+                        Console.Beep(659, 125);
                     }
 
                 }
