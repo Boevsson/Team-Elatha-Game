@@ -152,11 +152,11 @@ namespace CarRacer
             Random random = new Random();
 
             int newCarInterval = 0;
+            int newFastCarInterval = 0;
             int newCollectibleInterval = 0;
 
             while (true)
             {
-                bool hitted = false;
 
                 if (newCollectibleInterval > 29)
                 {
@@ -172,7 +172,37 @@ namespace CarRacer
 
                 if (newCarInterval > spawnCarInterval)
                 {
-                    Car addCar = SpawnCar(random.Next(1, 6));
+                    Car addCar;
+
+                    if (newFastCarInterval > 17)
+                    {
+                        List<int> freelanes = new List<int>();
+                        for (int lane = 1; lane <= 5; lane++)
+                        {
+                            bool isFree = true;
+                            for (int car = 0; car < carsList.Count; car++)
+                            {
+                                if (carsList[car].X == trackOffsetRight + 1 + (lane - 1) * 4 && carsList[car].Y < 25)
+                                {
+                                    isFree = false;
+                                }
+                            }
+                            if (isFree)
+                            {
+                                freelanes.Add(lane);
+                            }
+                        }
+                        int randomFreeLane = freelanes[random.Next(0, freelanes.Count)];
+                        addCar = SpawnCar(randomFreeLane);
+                        addCar.Speed = 2;
+                        newFastCarInterval = 0;
+                    }
+                    else
+                    {
+                        addCar = SpawnCar(random.Next(1, 6));
+                        addCar.Speed = 1;
+                    }
+
                     carsList.Add(addCar);
                     newCarInterval = 0;
                 }
@@ -203,7 +233,7 @@ namespace CarRacer
 
                 foreach (var car in carsList)
                 {
-                    car.Y++;
+                    car.Y += car.Speed;
                     PrintCar(car);
                     //PrintCarAtPosition(car.X, car.Y, "*", car.Color);
 
@@ -315,6 +345,7 @@ namespace CarRacer
                 Thread.Sleep(250 - speed);
                 Console.Clear();
                 newCarInterval++;
+                newFastCarInterval++;
                 newCollectibleInterval++;
 
                 // todo: collision detection

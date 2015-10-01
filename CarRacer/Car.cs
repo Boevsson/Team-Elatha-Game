@@ -9,8 +9,22 @@ namespace CarRacer
         private int x;
         private int y;
         private ConsoleColor color;
+        private int speed;
 
         // getters & setters
+        public int Speed
+        {
+            get
+            {
+                return this.speed;
+            }
+
+            set
+            {
+                this.speed = value;
+            }
+        }
+
         public ConsoleColor Color
         {
             get
