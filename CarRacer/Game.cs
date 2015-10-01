@@ -201,10 +201,10 @@ namespace CarRacer
                     {
                         addCar = SpawnCar(random.Next(1, 6));
                         addCar.Speed = 1;
+                        newCarInterval = 0;
                     }
 
                     carsList.Add(addCar);
-                    newCarInterval = 0;
                 }
 
                 for (int i = 1; i < 45; i += 2)
