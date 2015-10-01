@@ -136,6 +136,9 @@ namespace CarRacer
             Console.Write("Enter your nickname: ");
             player = Console.ReadLine();
 
+            score = 0;
+            lives = 3;
+
         RestartRace:
             PlaySound(sound);
 
