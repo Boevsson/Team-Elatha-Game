@@ -211,12 +211,13 @@ namespace CarRacer
                         PlaySound("Crash");
                         lives--;
 
+                        Thread.Sleep(2000);
+
                         if (lives <= 0)
                         {
                             GameOver(score, player);
                         }
-
-                        Thread.Sleep(1200);
+ 
                         carsList.Clear();
                         Console.Clear();
                         goto RestartRace;
