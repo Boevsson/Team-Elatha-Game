@@ -136,14 +136,14 @@ namespace CarRacer
             Console.Write("Enter your nickname: ");
             player = Console.ReadLine();
 
+        RestartRace:
             PlaySound(sound);
 
             // variables
             List<Car> carsList = new List<Car>();
             List<Coin> collectibles = new List<Coin>();
 
-        // initialize player car
-        RestartRace:
+            // initialize player car
             Car myCar = new Car(34, 35, ConsoleColor.Red);
 
             Random random = new Random();
@@ -204,7 +204,7 @@ namespace CarRacer
                     PrintCar(car);
                     //PrintCarAtPosition(car.X, car.Y, "*", car.Color);
 
-                    if (car.X == myCar.X && myCar.Y >= car.Y && myCar.Y <= car.Y + 4)
+                    if (car.X == myCar.X && ((myCar.Y >= car.Y && myCar.Y <= car.Y + 4) || (myCar.Y + 4 >= car.Y && myCar.Y + 4 <= car.Y + 4)))
                     {
                         PrintCarAtPosition(myCar.X, myCar.Y, "X", ConsoleColor.DarkRed);
 
@@ -591,6 +591,8 @@ namespace CarRacer
 
         private void GameOver(double score, string player)
         {   // Endgame screen?
+            SaveScore((int)score, player);
+
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(string.Format(@"
