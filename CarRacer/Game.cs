@@ -250,7 +250,7 @@ namespace CarRacer
                         {
                             GameOver(score, player);
                         }
- 
+
                         carsList.Clear();
                         Console.Clear();
                         goto RestartRace;
@@ -432,11 +432,28 @@ namespace CarRacer
 
         private void AboutGame()
         {
-            // some info about the game - name, represents group project for AdvancedC#, softuni
-            // authors
-            // 1) ...
-            // 2) ...
-            // etc
+            Console.Clear();
+            Console.WriteLine(" CAR RACER - a TEAM \"ELATHA\" project for AdvancedC# course in SoftUni, Sept.21015");
+            Console.WriteLine();
+            Console.WriteLine("Authors (in alphabetical order):");
+            Console.WriteLine("1) Aleksandar.Tanev");
+            Console.WriteLine("2) bulgaria_mitko");
+            Console.WriteLine("3) pgboev");
+            Console.WriteLine("4) PreslavPetkov");
+            Console.WriteLine("5) Rextor92");
+            Console.WriteLine("6) Tsvyatko");
+            Console.WriteLine("7) yanchev_i");
+            Console.WriteLine();
+            Console.WriteLine("Press ESC to return to Main menu.");
+            
+            while (true)
+            {
+                ConsoleKeyInfo pressedKey = Console.ReadKey();
+                if (pressedKey.Key == ConsoleKey.Escape)
+                {
+                    ShowMenu();
+                }
+            }
         } // end private void AboutGame()
 
         #region HIGHSCORE_SYSTEM
