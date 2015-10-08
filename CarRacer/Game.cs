@@ -225,6 +225,8 @@ namespace CarRacer
                 Console.WriteLine("Lives: {0}", lives);
                 Console.SetCursorPosition(trackOffsetRight + 5 * 5, 8);
                 Console.WriteLine("Speed: {0}", speed);
+                Console.SetCursorPosition(2, 1);
+                Console.WriteLine("Press Esc to pause");
                 // Position = track offset + 4 lanes, 5 chars each + aditional buffer 5
 
                 PrintCar(myCar);
