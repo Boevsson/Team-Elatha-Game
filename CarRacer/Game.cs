@@ -415,9 +415,11 @@ namespace CarRacer
             else if (pointerY == continueRow)
             {
                 PrintAtPosition("Resuming game in:", 2, exitGameRow + 2);
+                int fixing = 3;
                 for (int i = 1; i <= 3; i++)
                 {
-                    PrintAtPosition(i.ToString(), "Resuming game in:".Length / 2 + 2, exitGameRow + 4);
+                    PrintAtPosition(fixing.ToString(), "Resuming game in:".Length / 2 + 2, exitGameRow + 4);
+                    fixing--;
                     Thread.Sleep(1000);
                 }
                 return;
@@ -435,19 +437,27 @@ namespace CarRacer
         private void AboutGame()
         {
             Console.Clear();
-            Console.WriteLine(" CAR RACER - a TEAM \"ELATHA\" project for AdvancedC# course in SoftUni, Sept.21015");
+            PlaySound("Menu");
+            centerText("=================");
+            centerText("=== CAR RACER ===");
+            centerText("=================");
             Console.WriteLine();
-            Console.WriteLine("Authors (in alphabetical order):");
-            Console.WriteLine("1) Aleksandar.Tanev");
-            Console.WriteLine("2) bulgaria_mitko");
-            Console.WriteLine("3) pgboev");
-            Console.WriteLine("4) PreslavPetkov");
-            Console.WriteLine("5) Rextor92");
-            Console.WriteLine("6) Tsvyatko");
-            Console.WriteLine("7) yanchev_i");
+            centerText("TEAM \"ELATHA\"");
+            centerText("project for AdvancedC# course in SoftUni");
+            centerText("September 21015");
             Console.WriteLine();
-            Console.WriteLine("Press ESC to return to Main menu.");
-            
+            centerText("Authors (in alphabetical order):");
+            centerText("====");
+            centerText("1) Aleksandar.Tanev");
+            centerText("2) bulgaria_mitko");
+            centerText("3) pgboev");
+            centerText("4) PreslavPetkov");
+            centerText("5) Rextor92");
+            centerText("6) Tsvyatko");
+            centerText("7) yanchev_i");
+            Console.WriteLine();
+            centerText("Press ESC to return to Main menu.");
+
             while (true)
             {
                 ConsoleKeyInfo pressedKey = Console.ReadKey();
