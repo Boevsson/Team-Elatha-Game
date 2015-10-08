@@ -239,7 +239,7 @@ namespace CarRacer
                     PrintCar(car);
                     //PrintCarAtPosition(car.X, car.Y, "*", car.Color);
 
-                    if (car.X == myCar.X && ((myCar.Y >= car.Y && myCar.Y <= car.Y + 4) || (myCar.Y + 4 >= car.Y && myCar.Y + 4 <= car.Y + 4)))
+                    if (car.X == myCar.X && ((myCar.Y >= car.Y && myCar.Y <= car.Y + 3) || (myCar.Y + 3 >= car.Y && myCar.Y + 3 <= car.Y + 3)))
                     {
                         PrintCarAtPosition(myCar.X, myCar.Y, "X", ConsoleColor.DarkRed);
 
